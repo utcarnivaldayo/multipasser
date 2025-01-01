@@ -1,18 +1,4 @@
----
-force: true
----
-
 # {{ project_name | kebab_case }}
-
-## リポジトリルートから docker compose を使えるようにする設定
-
-リポジトリルートの `compose.yml`の `include` ブロックにこのプロジェクトの`compose.yml`へのパスを追加
-
-```sh
-include:
-  ...
-  - ./{{ project_name | kebab_case }}/compose.yml
-```
 
 ## docker comoose による docker image の作成
 
@@ -31,6 +17,7 @@ docker compose --profile dev-{{ project_name | kebab_case }} build
 
 ## docker comoose によるコンテナサービスの起動・終了
 
+{%- if has_frontend && has_backend %}
 ### サービス全体を起動
 
 ```sh
@@ -42,7 +29,9 @@ docker compose --profile dev-{{ project_name | kebab_case }}-frontend --profile 
 ```sh
 docker compose --profile dev-{{ project_name | kebab_case }}-frontend --profile dev-{{ project_name | kebab_case }}-end down -v
 ```
+{%- endif %}
 
+{%- if has_frontend %}
 ### frontend サービスを起動
 
 ```sh
@@ -54,7 +43,9 @@ docker compose --profile dev-{{ project_name | kebab_case }}-frontend up -d
 ```sh
 docker compose --profile dev-{{ project_name | kebab_case }}-frontend down -v
 ```
+{%- endif %}
 
+{%- if has_backend %}
 ### backend サービスを起動
 
 ```sh
@@ -66,3 +57,4 @@ docker compose --profile dev-{{ project_name | kebab_case }}-backend up -d
 ```sh
 docker compose --profile dev-{{ project_name | kebab_case }}-backend down -v
 ```
+{%- endif %}

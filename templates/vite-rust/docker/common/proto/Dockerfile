@@ -1,7 +1,3 @@
----
-force: true
----
-
 # ----- base -----
 ARG ENVIRONMENT
 ARG PROJECT

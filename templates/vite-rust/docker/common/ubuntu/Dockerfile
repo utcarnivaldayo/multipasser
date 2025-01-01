@@ -1,7 +1,3 @@
----
-force: true
----
-
 # ----- base -----
 ARG UBUNTU_VERSION
 FROM ubuntu:${UBUNTU_VERSION} AS base

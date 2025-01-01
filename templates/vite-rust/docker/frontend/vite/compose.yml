@@ -1,5 +1,5 @@
 ---
-force: true
+skip: {{ has_frontend == false }}
 ---
 
 services:
@@ -28,9 +28,11 @@ services:
       dev-{{ project_name | kebab_case }}-common-proto:
         condition: service_started
         required: false
+      {%- if has_backend %}
       dev-{{ project_name | kebab_case }}-backend-api:
         condition: service_started
         required: false
+      {%- endif %}
     restart: on-failure
     ports:
       - 5173:5173

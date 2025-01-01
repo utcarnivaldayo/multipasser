@@ -1,0 +1,15 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+stack: 'infrastructure'
+language: 'bash'
+type: 'configuration'
+
+tags:
+  - 'multipasser'
+
+project:
+  name: 'workspaces'
+  description: 'multipasser workspaces'
+  channel: 'https://github.com/utcarnivaldayo/multipasser/issues'
+  owner: 'utcarnivaldayo'
+  maintainers: ['utcarnivaldayo']

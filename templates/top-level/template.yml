@@ -1,0 +1,9 @@
+title: 'top-level'
+description: |
+  monorepo top-level files
+destination: '/'
+variables:
+  project:
+    type: 'string'
+    default: '<PROJECT_NAME>'
+    prompt: 'projects?'

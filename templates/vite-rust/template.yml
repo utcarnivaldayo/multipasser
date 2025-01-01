@@ -11,16 +11,21 @@ destination: '/{{ project_name }}'
 variables:
   project_name:
     type: 'string'
-    default: ''
     required: true
-    prompt: 'project name?'
+    prompt: 'Project name?'
   owner_name:
     type: 'string'
-    default: ''
     required: true
-    prompt: 'owner name?'
+    prompt: 'Owner name?'
   channel_name:
     type: 'string'
-    default: ''
     required: true
-    prompt: 'channel name?'
+    prompt: 'Channel name?'
+  has_frontend:
+    type: 'boolean'
+    default: false
+    prompt: 'Has frontend?'
+  has_backend:
+    type: 'boolean'
+    default: false
+    prompt: 'Has backend?'
