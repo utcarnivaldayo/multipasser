@@ -7,7 +7,7 @@ description: |
     - batch server (rust)
     - mysql
     - mysql-replica
-destination: '[project_name]'
+destination: '/{{ project_name }}'
 variables:
   project_name:
     type: 'string'
