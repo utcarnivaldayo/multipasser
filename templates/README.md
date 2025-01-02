@@ -10,7 +10,7 @@
 ```sh
 # NOTE: この README.md のあるディレクトリ(templates)上に移動してコマンドを実施すること
 source ../workspaces/multipass/lib/core.sh
-cp -pr ./top-level/.devcontainer $(core::monorepo_root)/
+cp -r ./top-level/.devcontainer $(core::monorepo_root)/
 ```
 
 ## moon コマンドを利用するための初回セットアップ
@@ -20,7 +20,7 @@ cp -pr ./top-level/.devcontainer $(core::monorepo_root)/
 ```sh
 # NOTE: この README.md のあるディレクトリ(templates)上に移動してコマンドを実施すること
 source ../workspaces/multipass/lib/core.sh
-cp -pr ./top-level/.moon $(core::monorepo_root)/
+cp -r ./top-level/.moon $(core::monorepo_root)/
 ```
 
 ## モノレポリポジトリルート上に必要なファイルの生成
