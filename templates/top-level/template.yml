@@ -3,7 +3,7 @@ description: |
   monorepo top-level files
 destination: '/'
 variables:
-  project:
+  project_name:
     type: 'string'
     default: '<PROJECT_NAME>'
     prompt: 'projects?'

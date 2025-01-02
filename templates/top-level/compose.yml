@@ -1,2 +1,2 @@
 include:
-  - ./{{ project }}/compose.yml
+  - ./{{ project_name }}/compose.yml
