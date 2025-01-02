@@ -17,7 +17,7 @@ docker compose --profile dev-{{ project_name | kebab_case }} build
 
 ## docker comoose によるコンテナサービスの起動・終了
 
-{%- if has_frontend && has_backend %}
+{%- if has_frontend and has_backend %}
 ### サービス全体を起動
 
 ```sh

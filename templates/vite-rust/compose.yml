@@ -6,8 +6,8 @@ include:
   - ./docker/frontend/vite/compose.yml
   {%- endif %}
   {%- if has_backend %}
-  - ./docker/backend/{{ backend }}/compose.yml
-  {%- for backend in backends %}
-  {%- endfor %}
   - ./docker/common/rust/compose.yml
+  {%- for backend in backends %}
+  - ./docker/backend/{{ backend }}/compose.yml
+  {%- endfor %}
   {%- endif %}
