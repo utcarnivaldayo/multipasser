@@ -1,0 +1,23 @@
+services:
+  dev-hoge-common-rust:
+    image: dev-hoge-common-rust:${GIT_BRANCH:-unknown}
+    container_name: dev-hoge-common-rust
+    build:
+      context: ../../../../
+      dockerfile: ./hoge/docker/common/rust/Dockerfile
+      target: dev
+      args:
+        - ENVIRONMENT=dev
+        - PROJECT=hoge
+        - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - USER_NAME=${HOGE_USER_NAME:-hoge}
+        - RUST_VERSION=${HOGE_RUST_VERSION:-1.83.0}
+    depends_on:
+      dev-hoge-common-proto:
+        condition: service_started
+        required: false
+    init: true
+    profiles:
+      - dev
+      - dev-hoge
+      - dev-hoge-common

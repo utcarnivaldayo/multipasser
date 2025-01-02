@@ -1,0 +1,15 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+stack: 'infrastructure'
+language: 'bash'
+type: 'configuration'
+
+tags:
+  - 'hoge'
+
+project:
+  name: 'hoge project'
+  description: 'vite-rust application'
+  channel: '#ut'
+  owner: 'ut'
+  maintainers: ['ut']

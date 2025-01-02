@@ -1,0 +1,64 @@
+services:
+  dev-hoge-backend-rdb-replica:
+    image: dev-hoge-backend-rdb-replica:${GIT_BRANCH:-unknown}
+    hostname: dev-hoge-backend-rdb-replica
+    container_name: dev-hoge-backend-rdb-replica
+    build:
+      context: ../../../../
+      dockerfile: ./hoge/docker/backend/rdb-replica/Dockerfile
+      target: dev
+      args:
+        - ENVIRONMENT=dev
+        - PROJECT=hoge
+        - ROLE=backend
+        - SERVICE=rdb-replica
+        - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - USER_NAME=${HOGE_USER_NAME:-hoge}
+    depends_on:
+      dev-hoge-common-ubuntu:
+        condition: service_started
+        required: false
+      dev-hoge-backend-rdb:
+        condition: service_healthy
+        required: true
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${HOGE_MYSQL_ROOT_PASSWORD}
+      - MYSQL_REPLICA_PASSWORD=${HOGE_MYSQL_REPLICA_PASSWORD}
+    ports:
+      - 3307:3306
+      - 33061:33060
+    volumes:
+      - type: bind
+        source: ../../../${HOGE_APP_DIR:-app}/${HOGE_BACKEND_PROJECT:-backend}/infra/migration
+        target: /home/${HOGE_USER_NAME:-hoge}/migration
+      - type: volume
+        source: dev-hoge-backend-rdb-replica-volume
+        target: /var/lib/mysql
+    init: true
+    tty: true
+    stdin_open: true
+    networks:
+      - dev-hoge-backend-network
+    profiles:
+      - dev
+      - dev-hoge
+      - dev-hoge-backend
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u root -p${HOGE_MYSQL_ROOT_PASSWORD} | grep -q 'mysqld is alive'",
+        ]
+      interval: 1s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+networks:
+  dev-hoge-backend-network:
+    name: dev-hoge-backend-network
+
+volumes:
+  dev-hoge-backend-rdb-replica-volume:
+    name: dev-hoge-backend-rdb-replica-volume

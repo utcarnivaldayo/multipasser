@@ -1,0 +1,17 @@
+services:
+  dev-hoge-common-ubuntu:
+    image: dev-hoge-common-ubuntu:${GIT_BRANCH:-unknown}
+    container_name: dev-hoge-common-ubuntu
+    build:
+      context: ../../../../
+      dockerfile: ./hoge/docker/common/ubuntu/Dockerfile
+      target: dev
+      args:
+        - UBUNTU_VERSION=${HOGE_UBUNTU_VERSION:-24.04}
+        - USER_NAME=${HOGE_USER_NAME:-hoge}
+        - USER_PASSWORD=${HOGE_USER_PASSWORD}
+    init: true
+    profiles:
+      - dev
+      - dev-hoge
+      - dev-hoge-common

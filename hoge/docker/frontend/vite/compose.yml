@@ -1,0 +1,56 @@
+services:
+  dev-hoge-frontend-vite:
+    image: dev-hoge-frontend-vite:${GIT_BRANCH:-unknown}
+    hostname: dev-hoge-frontend-vite
+    container_name: dev-hoge-frontend-vite
+    build:
+      context: ../../../../
+      dockerfile: ./hoge/docker/frontend/vite/Dockerfile
+      target: dev
+      args:
+        - ENVIRONMENT=dev
+        - PROJECT=hoge
+        - ROLE=frontend
+        - SERVICE=vite
+        - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - USER_NAME=${HOGE_USER_NAME:-hoge}
+        - APP_DIR=${HOGE_APP_DIR:-app}
+        - FRONTEND_PROJECT=${HOGE_FRONTEND_PROJECT:-frontend}
+        - NODE_VERSION=${HOGE_NODE_VERSION:-22.12.0}
+        - PNPM_VERSION=${HOGE_PNPM_VERSION:-9.15.2}
+        - PORT=5173
+        - VSCODE_EXTENSION_JSON=extensions.json
+    depends_on:
+      dev-hoge-common-proto:
+        condition: service_started
+        required: false
+      dev-hoge-backend-api:
+        condition: service_started
+        required: false
+    restart: on-failure
+    ports:
+      - 5173:5173
+    volumes:
+      - type: bind
+        source: ../../../${HOGE_APP_DIR:-app}
+        target: /home/${HOGE_USER_NAME:-hoge}/${HOGE_APP_DIR:-app}
+      - type: volume
+        source: dev-hoge-frontend-node-modules-volume
+        target: /home/${HOGE_USER_NAME:-hoge}/${HOGE_APP_DIR:-app}/${HOGE_FRONTEND_PROJECT:-frontend}/node_modules
+    init: true
+    tty: true
+    stdin_open: true
+    networks:
+      - dev-hoge-frontend-network
+    profiles:
+      - dev
+      - dev-hoge
+      - dev-hoge-frontend
+
+networks:
+  dev-hoge-frontend-network:
+    name: dev-hoge-frontend-network
+
+volumes:
+  dev-hoge-frontend-node-modules-volume:
+    name: dev-hoge-frontend-node-modules-volume

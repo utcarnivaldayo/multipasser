@@ -1,0 +1,13 @@
+.DS_Store
+.vscode/
+*.env
+
+# moon
+.moon/cache
+.moon/docker
+
+# infisical
+.infisical.json
+.infisical-dev.json
+.infisical-stg.json
+.infisical-prod.json

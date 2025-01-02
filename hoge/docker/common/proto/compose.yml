@@ -1,0 +1,23 @@
+services:
+  dev-hoge-common-proto:
+    image: dev-hoge-common-proto:${GIT_BRANCH:-unknown}
+    container_name: dev-hoge-common-proto
+    build:
+      context: ../../../../
+      dockerfile: ./hoge/docker/common/proto/Dockerfile
+      target: dev
+      args:
+        - ENVIRONMENT=dev
+        - PROJECT=hoge
+        - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - USER_NAME=${HOGE_USER_NAME:-hoge}
+        - PROTO_VERSION=${HOGE_PROTO_VERSION:-0.44.2}
+    depends_on:
+      dev-hoge-common-ubuntu:
+        condition: service_started
+        required: false
+    init: true
+    profiles:
+      - dev
+      - dev-hoge
+      - dev-hoge-common

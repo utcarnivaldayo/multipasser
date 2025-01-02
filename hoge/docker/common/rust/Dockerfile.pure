@@ -1,0 +1,35 @@
+# ----- base -----
+ARG ENVIRONMENT
+ARG PROJECT
+ARG GIT_BRANCH
+FROM ${ENVIRONMENT}-${PROJECT}-common-ubuntu:${GIT_BRANCH} AS base
+SHELL ["/bin/bash", "-c"]
+
+# args
+ARG USER_NAME
+ARG RUST_VERSION
+
+ARG WORKSPACE=/home/${USER_NAME}
+ENV PATH=${WORKSPACE}/.cargo/bin:${PATH}
+
+# install base packages
+USER root
+RUN apt-get -y update \
+  && apt-get --no-install-recommends -y install curl pkg-config build-essential libssl-dev cmake \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+
+USER ${USER_NAME}
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- --default-toolchain=${RUST_VERSION} -y \
+  && rustup target add wasm32-unknown-unknown \
+  && cargo install cargo-watch \
+  && cargo install wasm-pack \
+  && cargo install sqlx-cli
+
+
+# ----- dev -----
+FROM base AS dev
+
+
+# ----- prod -----
+FROM base AS prod

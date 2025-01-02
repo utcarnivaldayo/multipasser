@@ -1,0 +1,193 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mosapride.zenkaku",
+        "ms-azuretools.vscode-docker",
+        "oderwat.indent-rainbow",
+        "shardulm94.trailing-spaces",
+        "streetsidesoftware.code-spell-checker",
+        "mutantdino.resourcemonitor",
+        "aaron-bond.better-comments",
+        "mads-hartmann.bash-ide-vscode",
+        "jetmartin.bats",
+        "github.vscode-github-actions",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "foxundermoon.shell-format",
+        "timonwong.shellcheck",
+        "redhat.vscode-yaml",
+        "mechatroner.rainbow-csv",
+        "EditorConfig.EditorConfig",
+        "gamunu.opentofu",
+        "bierner.markdown-preview-github-styles",
+        "bierner.markdown-emoji",
+        "bierner.markdown-mermaid",
+        "johnpapa.vscode-peacock",
+        "tilt-dev.tiltfile",
+        "ms-vscode-remote.vscode-remote-extensionpack",
+        "DavidAnson.vscode-markdownlint",
+        "bierner.markdown-yaml-preamble",
+        "moonrepo.moon-console"
+      ],
+      "settings": {
+        "[css]": {
+          "editor.tabSize": 2
+        },
+        "[csv]": {
+          "editor.formatOnSave": false,
+          "editor.tabSize": 2,
+          "editor.wordWrap": "off"
+        },
+        "[dockerfile][dockercompose]": {
+          "editor.defaultFormatter": "ms-azuretools.vscode-docker",
+          "editor.tabSize": 2
+        },
+        "[html]": {
+          "editor.tabSize": 2
+        },
+        "[javascript]": {
+          "editor.tabSize": 2
+        },
+        "[json][jsonc]": {
+          "editor.defaultFormatter": "vscode.json-language-features",
+          "editor.tabSize": 2
+        },
+        "[log]": {
+          "editor.formatOnSave": false,
+          "editor.tabSize": 2,
+          "editor.wordWrap": "off"
+        },
+        "[markdown]": {
+          "editor.defaultFormatter": "vscode.markdown-language-features",
+          "editor.tabSize": 4,
+          "files.trimTrailingWhitespace": false
+        },
+        "[plaintext]": {
+          "editor.tabSize": 2
+        },
+        "[python]": {
+          "editor.tabSize": 4
+        },
+        "[rust]": {
+          "editor.defaultFormatter": "rust-lang.rust-analyzer",
+          "editor.tabSize": 4
+        },
+        "[shellscript]": {
+          "editor.tabSize": 2
+        },
+        "[terraform-vars]": {
+          "editor.defaultFormatter": "gamunu.opentofu",
+          "editor.tabSize": 2
+        },
+        "[terraform]": {
+          "editor.defaultFormatter": "gamunu.opentofu",
+          "editor.tabSize": 2
+        },
+        "[toml]": {
+          "editor.tabSize": 2
+        },
+        "[tsv]": {
+          "editor.insertSpaces": false,
+          "editor.wordWrap": "off"
+        },
+        "[typescript]": {
+          "editor.tabSize": 2
+        },
+        "[typescriptreact]": {
+          "editor.tabSize": 2
+        },
+        "[yaml]": {
+          "editor.defaultFormatter": "redhat.vscode-yaml",
+          "editor.tabSize": 2
+        },
+        "breadcrumbs.enabled": true,
+        "editor.bracketPairColorization.enabled": true,
+        "editor.codeActionsOnSave": {
+          "source.sort.json": "explicit"
+        },
+        "editor.copyWithSyntaxHighlighting": true,
+        "editor.cursorBlinking": "expand",
+        "editor.cursorSmoothCaretAnimation": "on",
+        "editor.cursorStyle": "line",
+        "editor.detectIndentation": false,
+        "editor.dragAndDrop": false,
+        "editor.formatOnPaste": false,
+        "editor.formatOnType": false,
+        "editor.glyphMargin": false,
+        "editor.guides.bracketPairs": true,
+        "editor.insertSpaces": true,
+        "editor.lightbulb.enabled": "off",
+        "editor.minimap.enabled": true,
+        "editor.minimap.maxColumn": 40,
+        "editor.minimap.showSlider": "always",
+        "editor.minimap.size": "fill",
+        "editor.mouseWheelZoom": true,
+        "editor.renderLineHighlight": "all",
+        "editor.renderWhitespace": "all",
+        "editor.rulers": [
+          119
+        ],
+        "editor.showFoldingControls": "always",
+        "editor.smoothScrolling": true,
+        "editor.suggest.showKeywords": false,
+        "editor.suggest.showWords": false,
+        "editor.tabSize": 2,
+        "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?　、。！？「」【】『』（）",
+        "editor.wordWrap": "on",
+        "emmet.variables": {
+          "lang": "ja"
+        },
+        "explorer.confirmDelete": false,
+        "explorer.confirmDragAndDrop": false,
+        "explorer.incrementalNaming": "smart",
+        "explorer.openEditors.visible": 1,
+        "extensions.ignoreRecommendations": false,
+        "files.autoGuessEncoding": true,
+        "files.autoSave": "off",
+        "files.encoding": "utf8",
+        "files.eol": "\n",
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "files.trimTrailingWhitespace": true,
+        "files.watcherExclude": {},
+        "markdownlint.config": {
+          "MD007": {
+            "indent": 3
+          },
+          "MD033": false
+        },
+        "rust-analyzer.rustfmt.extraArgs": [
+          "--config",
+          "tab_spaces=4"
+        ],
+        "scm.alwaysShowRepositories": true,
+        "search.exclude": {},
+        "search.showLineNumbers": true,
+        "terminal.integrated.confirmOnExit": "never",
+        "terminal.integrated.copyOnSelection": true,
+        "terminal.integrated.cursorBlinking": true,
+        "terminal.integrated.cursorStyle": "block",
+        "terminal.integrated.scrollback": 10000,
+        "workbench.activityBar.location": "top",
+        "workbench.editor.tabSizing": "shrink",
+        "workbench.startupEditor": "none",
+        "workbench.view.alwaysShowHeaderActions": true,
+        "yaml.format.printWidth": 119,
+        "yaml.format.singleQuote": true
+      }
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "init": true,
+  "name": "workspace",
+  "postCreateCommand": "/bin/bash ./workspaces/devcontainer/post-create -v",
+  "shutdownAction": "stopContainer",
+  "workspaceFolder": "/home/vscode/${localWorkspaceFolderBasename}",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/${localWorkspaceFolderBasename},type=bind,consistency=cached"
+}

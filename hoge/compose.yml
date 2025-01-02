@@ -1,0 +1,9 @@
+include:
+  - ./docker/common/ubuntu/compose.yml
+  - ./docker/common/proto/compose.yml
+  - ./docker/frontend/vite/compose.yml
+  - ./docker/common/rust/compose.yml
+  - ./docker/backend/batch/compose.yml
+  - ./docker/backend/api/compose.yml
+  - ./docker/backend/rdb/compose.yml
+  - ./docker/backend/rdb-replica/compose.yml

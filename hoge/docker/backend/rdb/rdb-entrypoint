@@ -1,0 +1,174 @@
+#!/usr/bin/env bash
+
+function is_sourced() {
+  ! [[ "${BASH_SOURCE[0]}" = "${0}" ]]
+}
+
+function init() {
+  set -ECeuo pipefail
+  shopt -s nullglob
+}
+
+function is_started_as_non_root_user() {
+  (( "$(id -u)" != 0 ))
+}
+
+function exists_command() {
+  local command_name=''
+  command_name="${1}"
+  command -v "${command_name}" &>/dev/null
+}
+
+function exists_database() {
+  local datadir=''
+  datadir="$(get_default_datadir)"
+  [[ -d "${datadir}/mysql" ]]
+}
+
+function get_mysqld_option_default_value() {
+  local -r mysqld_option="${1}"
+  local -r mysqld_option_key_value_list_keyword='Value (after reading options)'
+  local -r mysqld_option_list_limit=10000
+  mysqld --verbose --help --no-defaults \
+    | grep -A "${mysqld_option_list_limit}" "${mysqld_option_key_value_list_keyword}" \
+    | awk -v mysqld_option="${mysqld_option}" '$1==mysqld_option {print $2}'
+}
+
+function get_default_datadir() {
+  get_mysqld_option_default_value 'datadir'
+}
+
+function get_default_socket() {
+  get_mysqld_option_default_value 'socket'
+}
+
+function init_mysqld_datadir() {
+  mysqld --initialize-insecure --default-time-zone=SYSTEM --autocommit=1
+}
+
+function start_mysqld_tmp_server() {
+  local -r socket="${1}"
+  mysqld --daemonize --skip-networking --default-time-zone=SYSTEM --socket="${socket}"
+}
+
+function get_setup_query_with_comment() {
+  local -r mysql_root_password="${1}"
+  local -r mysql_replica_password="${2}"
+  cat - <<EOSQL
+-- enable autocommit explicitly (in case it was disabled globally)
+SET autocommit = 1;
+
+-- What's done in this file shouldn't be replicated
+--  or products like mysql-fabric won't work
+SET @@SESSION.SQL_LOG_BIN=0;
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${mysql_root_password}';
+GRANT ALL ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
+CREATE USER IF NOT EXISTS 'replica'@'%' IDENTIFIED BY '${mysql_replica_password}';
+GRANT REPLICATION SLAVE ON *.* TO 'replica'@'%';
+FLUSH PRIVILEGES;
+DROP DATABASE IF EXISTS test;
+EOSQL
+}
+
+function setup_mysql_root_user() {
+  local -r socket="${1}"
+  local -r mysql_root_password="${2}"
+  local -r mysql_replica_password="${3}"
+  mysql \
+    --protocol=socket \
+    -uroot \
+    -hlocalhost \
+    --socket="${socket}" \
+    --database=mysql \
+    --comments < <(get_setup_query_with_comment "${mysql_root_password}" "${mysql_replica_password}")
+}
+
+function setup_mysql_sql_file() {
+  local -r socket="${1}"
+  local -r mysql_root_password="${2}"
+  local -r custom_sql_file="${3}"
+  mysql \
+    --defaults-extra-file=<(get_mysql_client_cnf_root_password "${mysql_root_password}") \
+    --protocol=socket \
+    -uroot \
+    -hlocalhost \
+    --socket="${socket}" \
+    --comments < "${custom_sql_file}"
+}
+
+function get_mysql_client_cnf_root_password() {
+    local -r mysql_root_password="${1}"
+    cat - <<EOF
+[client]
+password="${mysql_root_password}"
+EOF
+}
+
+function stop_mysqld_tmp_server() {
+  local -r socket="${1}"
+  local -r mysql_root_password="${2}"
+  mysqladmin \
+    --defaults-extra-file=<(get_mysql_client_cnf_root_password "${mysql_root_password}") \
+    shutdown \
+    -uroot \
+    --socket="${socket}"
+}
+
+function main() {
+  exists_command 'mysql' || {
+    echo 'mysql command not found.' >&2
+    exit 1
+  }
+  exists_command 'mysqld' || {
+    echo 'mysqld command not found.' >&2
+    exit 1
+  }
+  exists_command 'mysqladmin' || {
+    echo 'mysqladmin command not found.' >&2
+    exit 1
+  }
+  [[ -n "${MYSQL_ROOT_PASSWORD}" ]] || {
+    echo 'MYSQL_ROOT_PASSWORD is not set.' >&2
+    exit 1
+  }
+  [[ -n "${MYSQL_REPLICA_PASSWORD}" ]] || {
+    echo 'MYSQL_REPLICA_PASSWORD is not set.' >&2
+    exit 1
+  }
+  # start
+  echo "Entrypoint script for MySQL Server started. $(mysql --version)"
+
+  is_started_as_non_root_user || {
+    echo 'This script must be run as a non-root user.' >&2
+    exit 1
+  }
+
+  local socket=''
+  socket="$(get_default_socket)"
+  local mysql_root_password='hoge'
+  local migration_sql_dir=''
+  migration_sql_dir="/home/$(whoami)/migration"
+  # initialize
+  if ! exists_database; then
+    init_mysqld_datadir
+    start_mysqld_tmp_server "${socket}"
+    setup_mysql_root_user "${socket}" "${MYSQL_ROOT_PASSWORD}" "${MYSQL_REPLICA_PASSWORD}"
+		ls "${migration_sql_dir}" > /dev/null
+    # while read -r sql_file; do
+    #   setup_mysql_sql_file "${socket}" "${MYSQL_ROOT_PASSWORD}" "${sql_file}"
+    # done < <(find "${migration_sql_dir}" -maxdepth 1 -type f -name '*.sql')
+    stop_mysqld_tmp_server "${socket}" "${MYSQL_ROOT_PASSWORD}"
+    echo "MySQL init process done. Ready for start up."
+  else
+    echo "Ready for start up."
+  fi
+  # shellcheck disable=SC2145
+  echo "exec $@"
+  exec "$@"
+}
+
+if ! is_sourced; then
+  init
+  main "$@"
+fi
