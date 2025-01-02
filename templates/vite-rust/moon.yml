@@ -1,7 +1,3 @@
----
-force: true
----
-
 $schema: 'https://moonrepo.dev/schemas/project.json'
 
 stack: 'infrastructure'

@@ -5,8 +5,8 @@ $schema: 'https://moonrepo.dev/schemas/workspace.json'
 versionConstraint: '>=1.0.0'
 
 projects:
-  - 'TODO'
+  - 'workspaces'
 
 vcs:
   manager: 'git'
-  defaultBranch: 'develop'
+  defaultBranch: 'main'

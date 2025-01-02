@@ -1,7 +1,3 @@
----
-force: true
----
-
 services:
   dev-{{ project_name | kebab_case }}-common-ubuntu:
     image: dev-{{ project_name | kebab_case }}-common-ubuntu:${GIT_BRANCH:-unknown}

@@ -1,5 +1,5 @@
 ---
-force: true
+skip: {{ has_backend == false }}
 ---
 
 DROP DATABASE IF EXISTS `{{ project_name | snake_case }}`;
