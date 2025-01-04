@@ -9,7 +9,10 @@ services:
       args:
         - ENVIRONMENT=dev
         - PROJECT={{ project_name | kebab_case }}
+        - ROLE=common
+        - SERVICE=proto
         - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
         - USER_NAME={{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}
         - PROTO_VERSION={{ '${' ~ project_name | upper_snake_case }}_PROTO_VERSION:-0.44.2}
     depends_on:

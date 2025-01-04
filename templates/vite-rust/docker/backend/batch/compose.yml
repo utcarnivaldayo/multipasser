@@ -17,6 +17,7 @@ services:
         - ROLE=backend
         - SERVICE=batch
         - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
         - USER_NAME={{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}
         - APP_DIR={{ '${' ~ project_name | upper_snake_case }}_APP_DIR:-app}
         - BACKEND_PROJECT={{ '${' ~ project_name | upper_snake_case }}_BACKEND_PROJECT:-backend}
