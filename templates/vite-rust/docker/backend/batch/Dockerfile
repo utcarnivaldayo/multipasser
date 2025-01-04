@@ -13,6 +13,14 @@ SHELL ["/bin/bash", "-c"]
 ARG PROJECT
 ARG ROLE
 ARG SERVICE
+ARG GIT_BRANCH
+ARG GIT_COMMIT_HASH
+
+LABEL org.opencontainers.image.title=dev-${PROJECT}-${ROLE}-${SERVICE}
+LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-rust/docker/${ROLE}/${SERVICE}/Dockerfile
+LABEL org.opencontainers.image.authors=utcarnivaldayo
+LABEL org.opencontainers.image.revision=${GIT_COMMIT_HASH}
+
 ARG USER_NAME
 ARG VSCODE_EXTENSIONS_JSON
 ARG APP_DIR
@@ -63,6 +71,17 @@ ARG PROJECT
 ARG GIT_BRANCH
 FROM ${ENVIRONMENT}-${PROJECT}-common-ubuntu:${GIT_BRANCH} AS prod
 SHELL ["/bin/bash", "-c"]
+
+ARG PROJECT
+ARG ROLE
+ARG SERVICE
+ARG GIT_BRANCH
+ARG GIT_COMMIT_HASH
+
+LABEL org.opencontainers.image.title=prod-${PROJECT}-${ROLE}-${SERVICE}
+LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-rust/docker/${ROLE}/${SERVICE}/Dockerfile
+LABEL org.opencontainers.image.authors=utcarnivaldayo
+LABEL org.opencontainers.image.revision=${GIT_COMMIT_HASH}
 
 ARG PORT
 

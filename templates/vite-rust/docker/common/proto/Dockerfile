@@ -5,6 +5,17 @@ ARG GIT_BRANCH
 FROM ${ENVIRONMENT}-${PROJECT}-common-ubuntu:${GIT_BRANCH} AS base
 SHELL ["/bin/bash", "-c"]
 
+ARG PROJECT
+ARG ROLE
+ARG SERVICE
+ARG GIT_BRANCH
+ARG GIT_COMMIT_HASH
+
+LABEL org.opencontainers.image.title=base-${PROJECT}-${ROLE}-${SERVICE}
+LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-rust/docker/${ROLE}/${SERVICE}/Dockerfile
+LABEL org.opencontainers.image.authors=utcarnivaldayo
+LABEL org.opencontainers.image.revision=${GIT_COMMIT_HASH}
+
 # args
 ARG USER_NAME
 ARG PROTO_VERSION
@@ -36,6 +47,28 @@ RUN curl --proto '=https' --tlsv1.2 -fsSL "https://moonrepo.dev/install/proto.sh
 FROM base AS dev
 SHELL ["/bin/bash", "-c"]
 
+ARG PROJECT
+ARG ROLE
+ARG SERVICE
+ARG GIT_BRANCH
+ARG GIT_COMMIT_HASH
+
+LABEL org.opencontainers.image.title=dev-${PROJECT}-${ROLE}-${SERVICE}
+LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-rust/docker/${ROLE}/${SERVICE}/Dockerfile
+LABEL org.opencontainers.image.authors=utcarnivaldayo
+LABEL org.opencontainers.image.revision=${GIT_COMMIT_HASH}
+
 # ----- prod -----
 FROM base AS prod
 SHELL ["/bin/bash", "-c"]
+
+ARG PROJECT
+ARG ROLE
+ARG SERVICE
+ARG GIT_BRANCH
+ARG GIT_COMMIT_HASH
+
+LABEL org.opencontainers.image.title=prod-${PROJECT}-${ROLE}-${SERVICE}
+LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-rust/docker/${ROLE}/${SERVICE}/Dockerfile
+LABEL org.opencontainers.image.authors=utcarnivaldayo
+LABEL org.opencontainers.image.revision=${GIT_COMMIT_HASH}

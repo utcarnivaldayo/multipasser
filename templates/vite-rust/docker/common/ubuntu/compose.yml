@@ -7,6 +7,11 @@ services:
       dockerfile: ./{{ project_name | kebab_case }}/docker/common/ubuntu/Dockerfile
       target: dev
       args:
+        - PROJECT={{ project_name | kebab_case }}
+        - ROLE=common
+        - SERVICE=ubuntu
+        - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
         - UBUNTU_VERSION={{ '${' ~ project_name | upper_snake_case }}_UBUNTU_VERSION:-24.04}
         - USER_NAME={{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}
         - USER_PASSWORD={{ '${' ~ project_name | upper_snake_case }}_USER_PASSWORD}
