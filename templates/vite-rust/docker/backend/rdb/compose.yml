@@ -17,6 +17,7 @@ services:
         - ROLE=backend
         - SERVICE=rdb
         - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
         - USER_NAME={{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}
         - MYSQL_VERSION={{ '${' ~ project_name | upper_snake_case }}_MYSQL_VERSION:-8.0}
     depends_on:
