@@ -9,18 +9,19 @@ function is_sourced() {
 function import_library() {
 
   local _command_path="${1}"
+  local _util_lib_path="${_command_path}/../../templates/bash-util/lib"
 
   # import core library
   # shellcheck source=/dev/null
-  source "${_command_path}/../multipass/lib/core.sh"
+  source "${_util_lib_path}/core.sh"
 
   # import logger library
   # shellcheck source=/dev/null
-  source "${_command_path}/../multipass/lib/logger.sh"
+  source "${_util_lib_path}/logger.sh"
 
   # import validator library
   # shellcheck source=/dev/null
-  source "${_command_path}/../multipass/lib/validator.sh"
+  source "${_util_lib_path}/validator.sh"
 
   # import devcontainerlibrary
   # shellcheck source=/dev/null

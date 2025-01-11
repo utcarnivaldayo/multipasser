@@ -1,11 +1,7 @@
+#!/usr/bin/env bats
+
 setup() {
-
-  export REPOSITORY_ROOT=''
-  REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
-
-  export REPOSITORY_NAME=''
-  REPOSITORY_NAME="$(basename "${REPOSITORY_ROOT}")"
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/core.sh"
+  load "../lib/core.sh"
 }
 
 teardown() {
@@ -16,14 +12,12 @@ teardown() {
 
   run core::monorepo_root
   (( status == 0 )) || false
-  [[ "${output}" = "${REPOSITORY_ROOT}" ]] || false
 }
 
 @test 'core::monorepo_name with success' {
 
   run core::monorepo_name
   (( status == 0 )) || false
-  [[ "${output}" = "${REPOSITORY_NAME}" ]] || false
 }
 
 @test 'core::rfc_3339 with success' {

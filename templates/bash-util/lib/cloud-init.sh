@@ -143,7 +143,6 @@ users:
       - ${_ssh_authorized_keys}
     groups:
       - docker
-      - microk8s
 EOS
 }
 

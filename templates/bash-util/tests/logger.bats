@@ -1,13 +1,8 @@
 #!/usr/bin/env bats
 
 setup() {
-
-  declare REPOSITORY_ROOT=''
-  REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
-  readonly REPOSITORY_ROOT
-
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/core.sh"
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/logger.sh"
+  load "../lib/core.sh"
+  load "../lib/logger.sh"
 }
 
 teardown() {

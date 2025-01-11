@@ -2,17 +2,14 @@
 
 setup() {
 
-  export REPOSITORY_ROOT=''
-  REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
+  export JSON_FILE="./fixtures/exists.json"
+  export YAML_FILE="./fixtures/compose.yml"
+  export TSV_FILE="./fixtures/exists.tsv"
+  export CSV_FILE="./fixtures/exists.csv"
 
-  export JSON_FILE="${REPOSITORY_ROOT}/workspaces/multipass/tests/fixtures/exists.json"
-  export YAML_FILE="${REPOSITORY_ROOT}/workspaces/multipass/tests/fixtures/compose.yml"
-  export TSV_FILE="${REPOSITORY_ROOT}/workspaces/multipass/tests/fixtures/exists.tsv"
-  export CSV_FILE="${REPOSITORY_ROOT}/workspaces/multipass/tests/fixtures/exists.csv"
-
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/core.sh"
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/logger.sh"
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/validator.sh"
+  load "../lib/core.sh"
+  load "../lib/logger.sh"
+  load "../lib/validator.sh"
 }
 
 teardown() {
