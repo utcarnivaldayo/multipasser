@@ -18,22 +18,23 @@ function set_command_env() {
 function import_library() {
 
   local _command_path="${1}"
+  local _util_lib_path="${_command_path}/../../templates/bash-util/lib"
 
   # import core library
   # shellcheck source=/dev/null
-  source "${_command_path}/lib/core.sh"
+  source "${_util_lib_path}/core.sh"
 
   # import logger library
   # shellcheck source=/dev/null
-  source "${_command_path}/lib/logger.sh"
+  source "${_util_lib_path}/logger.sh"
 
   # import validator library
   # shellcheck source=/dev/null
-  source "${_command_path}/lib/validator.sh"
+  source "${_util_lib_path}/validator.sh"
 
   # import ssh library
   # shellcheck source=/dev/null
-  source "${_command_path}/lib/ssh.sh"
+  source "${_util_lib_path}/ssh.sh"
 
   # import multipass library
   # shellcheck source=/dev/null

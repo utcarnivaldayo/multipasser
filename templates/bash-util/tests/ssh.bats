@@ -2,13 +2,10 @@
 
 setup() {
 
-  export REPOSITORY_ROOT=''
-  REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
-
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/core.sh"
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/logger.sh"
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/validator.sh"
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/ssh.sh"
+  load "../lib/core.sh"
+  load "../lib/logger.sh"
+  load "../lib/validator.sh"
+  load "../lib/ssh.sh"
 
   export RFC_1123_CLUSTER_NAME='rfc-1123-0123456789012345678901234567890123456789012345-cluster'
   export NO_RFC_1123_CLUSTER_NAME='un-rfc-1123-01234567890123456789012345678901234567890123-cluster'
@@ -23,10 +20,9 @@ setup() {
   export SNAKE_CASE_SSH_KEY_NAME='snake_case_ssh_key'
   export SSH_KEY_COMMENT='ssh_key_comment'
   export BACKUP_SUFFIX='.backup'
-  export FXTURES_DIR="${REPOSITORY_ROOT}/workspaces/multipass/tests/fixtures"
-  export DOCKER_COMPOSE_YAML="${FXTURES_DIR}/compose.yml"
-  export NO_DOCKER_COMPOSE_YAML="${FXTURES_DIR}/no-compose.yml"
-  export NO_PORTS_DOCKER_COMPOSE_YAML="${FXTURES_DIR}/no-ports-compose.yml"
+  export DOCKER_COMPOSE_YAML="./fixtures/compose.yml"
+  export NO_DOCKER_COMPOSE_YAML="./fixtures/no-compose.yml"
+  export NO_PORTS_DOCKER_COMPOSE_YAML="./fixtures/no-ports-compose.yml"
   export LOGIN_USER='login_user'
   export SSH_PORT='22'
   export NO_SSH_PORT='-22'

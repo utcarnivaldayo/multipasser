@@ -2,22 +2,19 @@
 
 setup() {
 
-  export REPOSITORY_ROOT=''
-  REPOSITORY_ROOT="$(git rev-parse --show-toplevel)"
-
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/core.sh"
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/logger.sh"
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/validator.sh"
-  load "${REPOSITORY_ROOT}/workspaces/multipass/lib/cloud-init.sh"
+  load "../lib/core.sh"
+  load "../lib/logger.sh"
+  load "../lib/validator.sh"
+  load "../lib/cloud-init.sh"
 
   export HOSTNAME='server'
   export USER_NAME='hoge'
   export USER_PASSWORD='fuga'
   export SSH_AUTHORIZED_KEYS='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQD'
   export REMOTE_MOUNT_POINT="/home/${USER_NAME}/mount-point"
-  export MIDDLEWARE_JSON="${REPOSITORY_ROOT}/workspaces/multipass/tests/fixtures/middleware.json"
-  export NO_MIDDLEWARE_JSON="${REPOSITORY_ROOT}/workspaces/multipass/tests/fixtures/no-middleware.json"
-  export VSCODE_EXTENSIONS_JSON="${REPOSITORY_ROOT}/workspaces/multipass/tests/fixtures/extensions.json"
+  export MIDDLEWARE_JSON="./fixtures/middleware.json"
+  export NO_MIDDLEWARE_JSON="./fixtures/no-middleware.json"
+  export VSCODE_EXTENSIONS_JSON="./fixtures/extensions.json"
   export BACKUP_SUFFIX='.backup'
 }
 
