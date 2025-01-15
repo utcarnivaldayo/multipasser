@@ -48,15 +48,15 @@ services:
     tty: true
     stdin_open: true
     networks:
-      - dev-{{ project_name | kebab_case }}-frontend-network
+      - dev-{{ project_name | kebab_case }}-network
     profiles:
       - dev
       - dev-{{ project_name | kebab_case }}
       - dev-{{ project_name | kebab_case }}-frontend
 
 networks:
-  dev-{{ project_name | kebab_case }}-frontend-network:
-    name: dev-{{ project_name | kebab_case }}-frontend-network
+  dev-{{ project_name | kebab_case }}-network:
+    name: dev-{{ project_name | kebab_case }}-network
 
 volumes:
   dev-{{ project_name | kebab_case }}-frontend-node-modules-volume:

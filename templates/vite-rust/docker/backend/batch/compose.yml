@@ -47,7 +47,7 @@ services:
     tty: true
     stdin_open: true
     networks:
-      - dev-{{ project_name | kebab_case }}-backend-network
+      - dev-{{ project_name | kebab_case }}-network
     profiles:
       - dev
       - dev-{{ project_name | kebab_case }}
@@ -55,7 +55,7 @@ services:
 
 networks:
   dev-{{ project_name | kebab_case }}-backend-network:
-    name: dev-{{ project_name | kebab_case }}-backend-network
+    name: dev-{{ project_name | kebab_case }}-network
 
 volumes:
   dev-{{ project_name | kebab_case }}-backend-target-volume:
