@@ -5,32 +5,22 @@
 
 ## devcontainer を利用する場合の初回セットアップ
 
-- multipass を介さずに devcontainer を利用して開発環境を用意する場合は、モノレポリポジトリルートに`.devcontainer/devcontainer.json` を配置します。
-
-```sh
-# NOTE: この README.md のあるディレクトリ(templates)上に移動してコマンドを実施すること
-source ../workspaces/multipass/lib/core.sh
-cp -r ./top-level/.devcontainer $(core::monorepo_root)/
-```
+- multipass を介さずに devcontainer を利用して開発環境を用意する場合は、モノレポリポジトリルートに`top-level`ディレクトリ下の`.devcontainer/devcontainer.json`を`.devcontainer`ディレクトリごとモノリポジトリルートにコピーします。
 
 ## moon コマンドを利用するための初回セットアップ
 
-- `moon`コマンドを利用するため、モノレポリポジトリルート上に `.moon/workspace.yml`を配置します。
-
-```sh
-# NOTE: この README.md のあるディレクトリ(templates)上に移動してコマンドを実施すること
-source ../workspaces/multipass/lib/core.sh
-cp -r ./top-level/.moon $(core::monorepo_root)/
-```
+- `moon`コマンドを利用するため、モノレポリポジトリルート上に `top-level`ディレクトリ下の`.moon/workspace.yml`を`.moon`ディレクトリごとコピーします。
 
 ## モノレポリポジトリルート上に必要なファイルの生成
 
 ```sh
+# モノレポリポジトリルート上で実施
 moon generate top-level
 ```
 
 ## フロントエンドに vite と バックエンドに rust を利用するプロジェクトの生成
 
 ```sh
+# モノレポリポジトリルート上で実施
 moon generate vite-rust
 ```
