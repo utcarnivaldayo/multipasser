@@ -4,6 +4,10 @@ $schema: 'https://moonrepo.dev/schemas/workspace.json'
 # Require a specific version of moon while running commands, otherwise fail.
 versionConstraint: '>=1.0.0'
 
+generator:
+  templates:
+    - 'file://./multipasser/templates'
+
 vcs:
   manager: 'git'
   defaultBranch: 'main'
