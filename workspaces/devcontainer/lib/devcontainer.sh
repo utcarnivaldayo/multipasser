@@ -381,6 +381,65 @@ function devcontainer::install_duckdb() {
   rm "${_home}/duckdb.zip"
 }
 
+function devcontainer::install_lltsv() {
+  local -r _middleware_json="${1:-}"
+  local -r _lltsv_version="${2:-}"
+  local -r _user="${3:-}"
+  local -r _home="/home/${_user}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_lltsv_version}" >&2 || return 1
+  validator::has_value "${_user}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+
+  if [[ "$(jq -r '.apt | has("curl")' "${_middleware_json}")" = 'false' ]]; then
+    logger::error "required curl in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  local _cpu_type
+  _cpu_type="$(uname -m)"
+
+  # cpu type
+  case "${_cpu_type}" in
+  aarch64 | arm64)
+    _cpu_type='arm'
+    ;;
+  x86_64 | x86-64 | x64 | amd64)
+    _cpu_type='amd64'
+    ;;
+  *)
+    logger::error "unsupported cpu type (${_cpu_type})" >&2
+    return 1
+    ;;
+  esac
+
+  cd "${_home}" || return 1
+  local -r _download_url='https://github.com/sonots/lltsv/releases/download'
+  local -r _tar_url="${_download_url}/v${_lltsv_version}/lltsv_linux_${_cpu_type}"
+  curl --proto '=https' --tlsv1.2 -sSfL "${_tar_url}" -o /usr/local/bin/lltsv
+  sudo chmod a+x /usr/local/bin/lltsv
+}
+
+function devcontainer::install_pixi() {
+  local -r _middleware_json="${1:-}"
+  local -r _pixi_version="${2:-}"
+  local -r _user="${3:-}"
+  local -r _home="/home/${_user}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_pixi_version}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+
+  if [[ "$(jq -r '.apt | has("curl")' "${_middleware_json}")" = 'false' ]]; then
+    logger::error "required curl in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  cd "${_home}" || return 1
+  curl --proto '=https' --tlsv1.2 -sSfL https://pixi.sh/install.sh | PIXI_VERSION="v${_pixi_version}" bash
+}
+
 function devcontainer::proto_install_bun() {
   local -r _middleware_json="${1:-}"
   local -r _bun_version="${2:-}"
@@ -1109,6 +1168,12 @@ function devcontainer::install_packages() {
       ;;
     duckdb)
       devcontainer::install_duckdb "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    lltsv)
+      devcontainer::install_lltsv "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    pixi)
+      devcontainer::install_pixi "${_middleware_json}" "${_version}" "${_user}"
       ;;
     docker)
       # NOTE: docker は devcontainer features でインストールされるため、手動インストールしない
