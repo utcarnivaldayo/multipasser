@@ -874,6 +874,7 @@ function cloud_init::set_install_lltsv() {
   # cpu type
   case "${_cpu_type}" in
   aarch64 | arm64)
+    # NOTE: apple silicon は未対応
     _cpu_type='arm'
     ;;
   x86_64 | x86-64 | x64 | amd64)
