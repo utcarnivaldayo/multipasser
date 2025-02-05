@@ -14,7 +14,7 @@ services:
         - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
         - UBUNTU_VERSION={{ '${' ~ project_name | upper_snake_case }}_UBUNTU_VERSION:-24.04}
         - USER_NAME={{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}
-        - USER_PASSWORD={{ '${' ~ project_name | upper_snake_case }}_USER_PASSWORD}
+        - USER_PASSWORD={{ '${' ~ project_name | upper_snake_case }}_USER_PASSWORD:-{{ project_name | kebab_case }}}
     init: true
     profiles:
       - dev
