@@ -199,7 +199,7 @@ function check_exists_instance() {
 }
 
 function generate_ssh_comment() {
-  echo "$(core::rfc_3339)-$(core::target_triple)-$(uname -n)"
+  echo "$(core::rfc_3339)-$(core::target_tuple)-$(uname -n)"
 }
 
 function get_authorized_key() {
