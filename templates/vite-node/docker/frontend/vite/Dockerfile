@@ -17,7 +17,7 @@ ARG GIT_BRANCH
 ARG GIT_COMMIT_HASH
 
 LABEL org.opencontainers.image.title=base-${PROJECT}-${ROLE}-${SERVICE}
-LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-rust/docker/${ROLE}/${SERVICE}/Dockerfile
+LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-node/docker/${ROLE}/${SERVICE}/Dockerfile
 LABEL org.opencontainers.image.authors=utcarnivaldayo
 LABEL org.opencontainers.image.revision=${GIT_COMMIT_HASH}
 
@@ -47,7 +47,7 @@ ARG GIT_BRANCH
 ARG GIT_COMMIT_HASH
 
 LABEL org.opencontainers.image.title=dev-${PROJECT}-${ROLE}-${SERVICE}
-LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-rust/docker/${ROLE}/${SERVICE}/Dockerfile
+LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-node/docker/${ROLE}/${SERVICE}/Dockerfile
 LABEL org.opencontainers.image.authors=utcarnivaldayo
 LABEL org.opencontainers.image.revision=${GIT_COMMIT_HASH}
 
@@ -100,7 +100,7 @@ ARG GIT_BRANCH
 ARG GIT_COMMIT_HASH
 
 LABEL org.opencontainers.image.title=prod-${PROJECT}-${ROLE}-${SERVICE}
-LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-rust/docker/${ROLE}/${SERVICE}/Dockerfile
+LABEL org.opencontainers.image.source=https://github.com/utcarnivaldayo/multipasser/blob/${GIT_BRANCH}/templates/vite-node/docker/${ROLE}/${SERVICE}/Dockerfile
 LABEL org.opencontainers.image.authors=utcarnivaldayo
 LABEL org.opencontainers.image.revision=${GIT_COMMIT_HASH}
 
