@@ -1,0 +1,69 @@
+---
+skip: {{ has_backend == false }}
+---
+
+services:
+  dev-{{ project_name | kebab_case }}-backend-rdb-replica:
+    image: dev-{{ project_name | kebab_case }}-backend-rdb-replica:${GIT_BRANCH:-unknown}
+    hostname: dev-{{ project_name | kebab_case }}-backend-rdb-replica
+    container_name: dev-{{ project_name | kebab_case }}-backend-rdb-replica
+    build:
+      context: ../../../../
+      dockerfile: ./{{ project_name | kebab_case }}/docker/backend/rdb-replica/Dockerfile
+      target: dev
+      args:
+        - ENVIRONMENT=dev
+        - PROJECT={{ project_name | kebab_case }}
+        - ROLE=backend
+        - SERVICE=rdb-replica
+        - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
+        - USER_NAME={{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}
+    depends_on:
+      dev-{{ project_name | kebab_case }}-common-ubuntu:
+        condition: service_started
+        required: false
+      dev-{{ project_name | kebab_case }}-backend-rdb:
+        condition: service_healthy
+        required: true
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ '${' ~ project_name | upper_snake_case }}_MYSQL_ROOT_PASSWORD:-{{ project_name | kebab_case }}}
+      - MYSQL_REPLICA_PASSWORD={{ '${' ~ project_name | upper_snake_case }}_MYSQL_REPLICA_PASSWORD:-{{ project_name | kebab_case }}}
+    ports:
+      - 3307:3306
+      - 33061:33060
+    volumes:
+      - type: bind
+        source: ../../../{{ '${' ~ project_name | upper_snake_case }}_APP_DIR:-app}/{{ '${' ~ project_name | upper_snake_case }}_BACKEND_PROJECT:-backend}/infra/migration
+        target: /home/{{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}/migration
+      - type: volume
+        source: dev-{{ project_name | kebab_case }}-backend-rdb-replica-volume
+        target: /var/lib/mysql
+    init: true
+    tty: true
+    stdin_open: true
+    networks:
+      - dev-{{ project_name | kebab_case }}-network
+    profiles:
+      - dev
+      - dev-{{ project_name | kebab_case }}
+      - dev-{{ project_name | kebab_case }}-backend
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u root -p{{ '${' ~ project_name | upper_snake_case }}_MYSQL_ROOT_PASSWORD:-{{ project_name | kebab_case }}} | grep -q 'mysqld is alive'",
+        ]
+      interval: 1s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+networks:
+  dev-{{ project_name | kebab_case }}-network:
+    name: dev-{{ project_name | kebab_case }}-network
+
+volumes:
+  dev-{{ project_name | kebab_case }}-backend-rdb-replica-volume:
+    name: dev-{{ project_name | kebab_case }}-backend-rdb-replica-volume

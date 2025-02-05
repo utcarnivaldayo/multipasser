@@ -1,0 +1,64 @@
+---
+skip: {{ has_backend == false }}
+---
+
+services:
+  dev-{{ project_name | kebab_case }}-backend-batch:
+    image: dev-{{ project_name | kebab_case }}-backend-batch:${GIT_BRANCH:-unknown}
+    hostname: dev-{{ project_name | kebab_case }}-backend-batch
+    container_name: dev-{{ project_name | kebab_case }}-backend-batch
+    build:
+      context: ../../../../
+      dockerfile: ./{{ project_name | kebab_case }}/docker/backend/batch/Dockerfile
+      target: dev
+      args:
+        - ENVIRONMENT=dev
+        - PROJECT={{ project_name | kebab_case }}
+        - ROLE=backend
+        - SERVICE=batch
+        - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
+        - USER_NAME={{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}
+        - APP_DIR={{ '${' ~ project_name | upper_snake_case }}_APP_DIR:-app}
+        - BACKEND_PROJECT={{ '${' ~ project_name | upper_snake_case }}_BACKEND_PROJECT:-backend}
+        - NODE_VERSION={{ '${' ~ project_name | upper_snake_case }}_NODE_VERSION:-22.13.1}
+        - PNPM_VERSION={{ '${' ~ project_name | upper_snake_case }}_PNPM_VERSION:-10.2.0}
+        - PORT=8082
+        - VSCODE_EXTENSION_JSON=extensions.json
+    depends_on:
+      dev-{{ project_name | kebab_case }}-common-proto:
+        condition: service_started
+        required: false
+      dev-{{ project_name | kebab_case }}-backend-rdb:
+        condition: service_healthy
+        required: true
+      dev-{{ project_name | kebab_case }}-backend-rdb-replica:
+        condition: service_healthy
+        required: true
+    restart: on-failure
+    ports:
+      - 8082:8082
+    volumes:
+      - type: bind
+        source: ../../../{{ '${' ~ project_name | upper_snake_case }}_APP_DIR:-app}
+        target: /home/{{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}/{{ '${' ~ project_name | upper_snake_case }}_APP_DIR:-app}
+      - type: volume
+        source: dev-{{ project_name | kebab_case }}-backend-node-modules-volume
+        target: /home/{{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}/{{ '${' ~ project_name | upper_snake_case }}_APP_DIR:-app}/{{ '${' ~ project_name | upper_snake_case }}_BACKEND_PROJECT:-backend}/node_modules
+    init: true
+    tty: true
+    stdin_open: true
+    networks:
+      - dev-{{ project_name | kebab_case }}-network
+    profiles:
+      - dev
+      - dev-{{ project_name | kebab_case }}
+      - dev-{{ project_name | kebab_case }}-backend
+
+networks:
+  dev-{{ project_name | kebab_case }}-backend-network:
+    name: dev-{{ project_name | kebab_case }}-network
+
+volumes:
+  dev-{{ project_name | kebab_case }}-backend-node-modules-volume:
+    name: dev-{{ project_name | kebab_case }}-backend-node-modules-volume

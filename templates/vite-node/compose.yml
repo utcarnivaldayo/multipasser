@@ -1,0 +1,12 @@
+{%- set backends = ['batch', 'api', 'rdb', 'rdb-replica'] -%}
+include:
+  - ./docker/common/ubuntu/compose.yml
+  - ./docker/common/proto/compose.yml
+  {%- if has_frontend %}
+  - ./docker/frontend/vite/compose.yml
+  {%- endif %}
+  {%- if has_backend %}
+  {%- for backend in backends %}
+  - ./docker/backend/{{ backend }}/compose.yml
+  {%- endfor %}
+  {%- endif %}

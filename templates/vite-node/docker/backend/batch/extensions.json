@@ -1,0 +1,22 @@
+---
+skip: {{ has_backend == false }}
+---
+
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "adpyke.vscode-sql-formatter",
+    "foxundermoon.shell-format",
+    "github.copilot",
+    "github.copilot-chat",
+    "mosapride.zenkaku",
+    "oderwat.indent-rainbow",
+    "rust-lang.rust-analyzer",
+    "shardulm94.trailing-spaces",
+    "streetsidesoftware.code-spell-checker",
+    "timonwong.shellcheck",
+    "yzhang.markdown-all-in-one",
+    "mads-hartmann.bash-ide-vscode"
+  ],
+  "unwantedRecommendations": []
+}
