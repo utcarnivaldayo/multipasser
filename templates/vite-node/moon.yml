@@ -1,0 +1,15 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+stack: 'infrastructure'
+language: 'bash'
+type: 'configuration'
+
+tags:
+  - '{{ project_name }}'
+
+project:
+  name: '{{ project_name }} project'
+  description: 'vite-node application'
+  channel: '#{{ channel_name }}'
+  owner: '{{ owner_name }}'
+  maintainers: ['{{ owner_name }}']

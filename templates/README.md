@@ -24,3 +24,10 @@ moon generate top-level
 # モノレポリポジトリルート上で実施
 moon generate vite-rust
 ```
+
+## フロントエンドに vite と バックエンドに node を利用するプロジェクトの生成
+
+```sh
+# モノレポリポジトリルート上で実施
+moon generate vite-node
+```

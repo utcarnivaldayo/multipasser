@@ -1,0 +1,31 @@
+title: 'vite-node'
+description: |
+  frontend:
+    - vite (node)
+  backend:
+    - api server (node)
+    - batch server (node)
+    - mysql
+    - mysql-replica
+destination: '/{{ project_name }}'
+variables:
+  project_name:
+    type: 'string'
+    required: true
+    prompt: 'Project name?'
+  owner_name:
+    type: 'string'
+    required: true
+    prompt: 'Owner name?'
+  channel_name:
+    type: 'string'
+    required: true
+    prompt: 'Channel name?'
+  has_frontend:
+    type: 'boolean'
+    default: false
+    prompt: 'Has frontend?'
+  has_backend:
+    type: 'boolean'
+    default: false
+    prompt: 'Has backend?'

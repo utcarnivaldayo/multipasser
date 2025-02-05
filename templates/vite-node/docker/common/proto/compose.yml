@@ -1,0 +1,26 @@
+services:
+  dev-{{ project_name | kebab_case }}-common-proto:
+    image: dev-{{ project_name | kebab_case }}-common-proto:${GIT_BRANCH:-unknown}
+    container_name: dev-{{ project_name | kebab_case }}-common-proto
+    build:
+      context: ../../../../
+      dockerfile: ./{{ project_name | kebab_case }}/docker/common/proto/Dockerfile
+      target: dev
+      args:
+        - ENVIRONMENT=dev
+        - PROJECT={{ project_name | kebab_case }}
+        - ROLE=common
+        - SERVICE=proto
+        - GIT_BRANCH=${GIT_BRANCH:-unknown}
+        - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
+        - USER_NAME={{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}
+        - PROTO_VERSION={{ '${' ~ project_name | upper_snake_case }}_PROTO_VERSION:-0.45.1}
+    depends_on:
+      dev-{{ project_name | kebab_case }}-common-ubuntu:
+        condition: service_started
+        required: false
+    init: true
+    profiles:
+      - dev
+      - dev-{{ project_name | kebab_case }}
+      - dev-{{ project_name | kebab_case }}-common
