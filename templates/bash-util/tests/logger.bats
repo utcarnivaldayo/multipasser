@@ -242,8 +242,8 @@ teardown() {
   run logger::log_tsv 'hoge'
 
   (( status == 0 )) || false
-  [[ "$(cut -f 4 <<< ${output})" = 'INFO' ]] || false
-  [[ "$(cut -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -f 4 <<< "${output}")" = 'INFO' ]] || false
+  [[ "$(cut -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::log_tsv with plane message and error level' {
@@ -253,8 +253,8 @@ teardown() {
   run logger::log_tsv 'hoge' 'error'
 
   (( status == 0 )) || false
-  [[ "$(cut -f 4 <<< ${output})" = 'ERROR' ]] || false
-  [[ "$(cut -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -f 4 <<< "${output}")" = 'ERROR' ]] || false
+  [[ "$(cut -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::log_tsv with plane message and unexpected level' {
@@ -273,8 +273,8 @@ teardown() {
   run logger::log_csv 'hoge'
 
   (( status == 0 )) || false
-  [[ "$(cut -d ',' -f 4 <<< ${output})" = 'INFO' ]] || false
-  [[ "$(cut -d ',' -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -d ',' -f 4 <<< "${output}")" = 'INFO' ]] || false
+  [[ "$(cut -d ',' -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::log_csv with plane message and error level' {
@@ -284,8 +284,8 @@ teardown() {
   run logger::log_csv 'hoge' 'error'
 
   (( status == 0 )) || false
-  [[ "$(cut -d ',' -f 4 <<< ${output})" = 'ERROR' ]] || false
-  [[ "$(cut -d ',' -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -d ',' -f 4 <<< "${output}")" = 'ERROR' ]] || false
+  [[ "$(cut -d ',' -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::log_csv with plane message and unexpected level' {
@@ -340,8 +340,8 @@ teardown() {
   run logger::log 'hoge' 'error' 'tsv'
 
   (( status == 0)) || false
-  [[ "$(cut -f 4 <<< ${output})" = 'ERROR' ]] || false
-  [[ "$(cut -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -f 4 <<< "${output}")" = 'ERROR' ]] || false
+  [[ "$(cut -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::log with csv format' {
@@ -351,8 +351,8 @@ teardown() {
   run logger::log 'hoge' 'error' 'csv'
 
   (( status == 0)) || false
-  [[ "$(cut -d ',' -f 4 <<< ${output})" = 'ERROR' ]] || false
-  [[ "$(cut -d ',' -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -d ',' -f 4 <<< "${output}")" = 'ERROR' ]] || false
+  [[ "$(cut -d ',' -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::log with unexpected format' {
@@ -392,8 +392,8 @@ teardown() {
   run logger::trace 'hoge' 'tsv'
 
   (( status == 0 )) || false
-  [[ "$(cut -f 4 <<< ${output})" = 'TRACE' ]] || false
-  [[ "$(cut -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -f 4 <<< "${output}")" = 'TRACE' ]] || false
+  [[ "$(cut -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::trace with csv format' {
@@ -402,8 +402,8 @@ teardown() {
   run logger::trace 'hoge' 'csv'
 
   (( status == 0 )) || false
-  [[ "$(cut -d ',' -f 4 <<< ${output})" = 'TRACE' ]] || false
-  [[ "$(cut -d ',' -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -d ',' -f 4 <<< "${output}")" = 'TRACE' ]] || false
+  [[ "$(cut -d ',' -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::trace with unexpected format' {
@@ -434,8 +434,8 @@ teardown() {
   run logger::debug 'hoge' 'tsv'
 
   (( status == 0 )) || false
-  [[ "$(cut -f 4 <<< ${output})" = 'DEBUG' ]] || false
-  [[ "$(cut -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -f 4 <<< "${output}")" = 'DEBUG' ]] || false
+  [[ "$(cut -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::debug with csv format' {
@@ -445,8 +445,8 @@ teardown() {
   run logger::debug 'hoge' 'csv'
 
   (( status == 0 )) || false
-  [[ "$(cut -d ',' -f 4 <<< ${output})" = 'DEBUG' ]] || false
-  [[ "$(cut -d ',' -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -d ',' -f 4 <<< "${output}")" = 'DEBUG' ]] || false
+  [[ "$(cut -d ',' -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::debug with unexpected format' {
@@ -478,8 +478,8 @@ teardown() {
   run logger::info 'hoge' 'tsv'
 
   (( status == 0 )) || false
-  [[ "$(cut -f 4 <<< ${output})" = 'INFO' ]] || false
-  [[ "$(cut -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -f 4 <<< "${output}")" = 'INFO' ]] || false
+  [[ "$(cut -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::info with csv format' {
@@ -489,8 +489,8 @@ teardown() {
   run logger::info 'hoge' 'csv'
 
   (( status == 0 )) || false
-  [[ "$(cut -d ',' -f 4 <<< ${output})" = 'INFO' ]] || false
-  [[ "$(cut -d ',' -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -d ',' -f 4 <<< "${output}")" = 'INFO' ]] || false
+  [[ "$(cut -d ',' -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::info with unexpected format' {
@@ -522,8 +522,8 @@ teardown() {
   run logger::warn 'hoge' 'tsv'
 
   (( status == 0 )) || false
-  [[ "$(cut -f 4 <<< ${output})" = 'WARN' ]] || false
-  [[ "$(cut -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -f 4 <<< "${output}")" = 'WARN' ]] || false
+  [[ "$(cut -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::warn with csv format' {
@@ -533,8 +533,8 @@ teardown() {
   run logger::warn 'hoge' 'csv'
 
   (( status == 0 )) || false
-  [[ "$(cut -d ',' -f 4 <<< ${output})" = 'WARN' ]] || false
-  [[ "$(cut -d ',' -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -d ',' -f 4 <<< "${output}")" = 'WARN' ]] || false
+  [[ "$(cut -d ',' -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::warn with unexpected format' {
@@ -566,8 +566,8 @@ teardown() {
   run logger::error 'hoge' 'tsv'
 
   (( status == 0 )) || false
-  [[ "$(cut -f 4 <<< ${output})" = 'ERROR' ]] || false
-  [[ "$(cut -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -f 4 <<< "${output}")" = 'ERROR' ]] || false
+  [[ "$(cut -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::error with csv format' {
@@ -577,8 +577,8 @@ teardown() {
   run logger::error 'hoge' 'csv'
 
   (( status == 0 )) || false
-  [[ "$(cut -d ',' -f 4 <<< ${output})" = 'ERROR' ]] || false
-  [[ "$(cut -d ',' -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -d ',' -f 4 <<< "${output}")" = 'ERROR' ]] || false
+  [[ "$(cut -d ',' -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::error with unexpected format' {
@@ -610,8 +610,8 @@ teardown() {
   run logger::fatal 'hoge' 'tsv'
 
   (( status == 0 )) || false
-  [[ "$(cut -f 4 <<< ${output})" = 'FATAL' ]] || false
-  [[ "$(cut -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -f 4 <<< "${output}")" = 'FATAL' ]] || false
+  [[ "$(cut -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::fatal with csv format' {
@@ -621,8 +621,8 @@ teardown() {
   run logger::fatal 'hoge' 'csv'
 
   (( status == 0 )) || false
-  [[ "$(cut -d ',' -f 4 <<< ${output})" = 'FATAL' ]] || false
-  [[ "$(cut -d ',' -f 5 <<< ${output})" = 'hoge' ]] || false
+  [[ "$(cut -d ',' -f 4 <<< "${output}")" = 'FATAL' ]] || false
+  [[ "$(cut -d ',' -f 5 <<< "${output}")" = 'hoge' ]] || false
 }
 
 @test 'logger::fatal with unexpected format' {
@@ -637,7 +637,7 @@ teardown() {
 @test 'logger::header_tsv' {
 
   logger::set_default_config
-  local -r _expected_header='datetime\tserver\ttarget_triple\tlevel\tmessage'
+  local -r _expected_header='datetime\tserver\ttarget_tuple\tlevel\tmessage'
   run logger::header_tsv
   (( status == 0 )) || false
   [[ "${output}" = "$(echo -e "${_expected_header}")" ]] || false
@@ -646,7 +646,7 @@ teardown() {
 @test 'logger::header_csv' {
 
   logger::set_default_config
-  local -r _expected_header='datetime,server,target_triple,level,message'
+  local -r _expected_header='datetime,server,target_tuple,level,message'
 
   run logger::header_csv
 

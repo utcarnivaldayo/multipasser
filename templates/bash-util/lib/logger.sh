@@ -10,7 +10,7 @@ export LOGGER_PRINT_FATAL="${LOGGER_ENABLE_FATAL:-true}"
 export LOGGER_PRINT_MESSAGE_ONLY="${LOGGER_PRINT_MESSAGE_ONLY:-false}"
 export LOGGER_HEADER_DATETIME="${LOGGER_HEADER_DATETIME:-datetime}"
 export LOGGER_HEADER_SERVER="${LOGGER_HEADER_SERVER:-server}"
-export LOGGER_HEADER_TARGET_TRIPLE="${LOGGER_HEADER_TARGET_TRIPLE:-target_triple}"
+export LOGGER_HEADER_TARGET_TUPLE="${LOGGER_HEADER_TARGET_TUPLE:-target_tuple}"
 export LOGGER_HEADER_LEVEL="${LOGGER_HEADER_LEVEL:-level}"
 export LOGGER_HEADER_MESSAGE="${LOGGER_HEADER_MESSAGE:-message}"
 
@@ -24,7 +24,7 @@ function logger::set_default_config() {
   export LOGGER_PRINT_FATAL='true'
   export LOGGER_HEADER_DATETIME='datetime'
   export LOGGER_HEADER_SERVER='server'
-  export LOGGER_HEADER_TARGET_TRIPLE='target_triple'
+  export LOGGER_HEADER_TARGET_TUPLE='target_tuple'
   export LOGGER_HEADER_LEVEL='level'
   export LOGGER_HEADER_MESSAGE='message'
 }
@@ -94,20 +94,20 @@ function logger::log_json() {
 
   local _datetime=''
   local _hostname=''
-  local _target_triple=''
+  local _target_tuple=''
   _datetime="$(core::rfc_3339)"
   _hostname="$(core::hostname)"
-  _target_triple="$(core::target_triple)"
+  _target_tuple="$(core::target_tuple)"
   local -r _datetime
   local -r _hostname
-  local -r _target_triple
+  local -r _target_tuple
 
   # json
   local -ra _log_json=(
     "{"
     "\"${LOGGER_HEADER_DATETIME:-datetime}\": \"${_datetime}\","
     "\"${LOGGER_HEADER_SERVER:-server}\": \"${_hostname}\","
-    "\"${LOGGER_HEADER_TARGET_TRIPLE:-target_triple}\": \"${_target_triple}\","
+    "\"${LOGGER_HEADER_TARGET_TUPLE:-target_tuple}\": \"${_target_tuple}\","
     "\"${LOGGER_HEADER_LEVEL:-level}\": \"${_logger_level}\","
     "\"${LOGGER_HEADER_MESSAGE:-message}\": \"${_message}\""
     "}"
@@ -130,19 +130,19 @@ function logger::log_tsv() {
 
   local _datetime=''
   local _hostname=''
-  local _target_triple=''
+  local _target_tuple=''
   _datetime="$(core::rfc_3339)"
   _hostname="$(core::hostname)"
-  _target_triple="$(core::target_triple)"
+  _target_tuple="$(core::target_tuple)"
   local -r _datetime
   local -r _hostname
-  local -r _target_triple
+  local -r _target_tuple
 
   # tsv
   local -ra _log_tsv=(
     "${_datetime}"
     "${_hostname}"
-    "${_target_triple}"
+    "${_target_tuple}"
     "${_logger_level}"
     "${_message}"
   )
@@ -164,19 +164,19 @@ function logger::log_csv() {
 
   local _datetime=''
   local _hostname=''
-  local _target_triple=''
+  local _target_tuple=''
   _datetime="$(core::rfc_3339)"
   _hostname="$(core::hostname)"
-  _target_triple="$(core::target_triple)"
+  _target_tuple="$(core::target_tuple)"
   local -r _datetime
   local -r _hostname
-  local -r _target_triple
+  local -r _target_tuple
 
   # csv
   local -ra _log_csv=(
     "${_datetime}"
     "${_hostname}"
-    "${_target_triple}"
+    "${_target_tuple}"
     "${_logger_level}"
     "${_message}"
   )
@@ -245,7 +245,7 @@ function logger::header_tsv() {
   local -ra _header_tsv=(
     "${LOGGER_HEADER_DATETIME}"
     "${LOGGER_HEADER_SERVER}"
-    "${LOGGER_HEADER_TARGET_TRIPLE}"
+    "${LOGGER_HEADER_TARGET_TUPLE}"
     "${LOGGER_HEADER_LEVEL}"
     "${LOGGER_HEADER_MESSAGE}"
   )
@@ -256,7 +256,7 @@ function logger::header_csv() {
   local -ra _header_csv=(
     "${LOGGER_HEADER_DATETIME}"
     "${LOGGER_HEADER_SERVER}"
-    "${LOGGER_HEADER_TARGET_TRIPLE}"
+    "${LOGGER_HEADER_TARGET_TUPLE}"
     "${LOGGER_HEADER_LEVEL}"
     "${LOGGER_HEADER_MESSAGE}"
   )

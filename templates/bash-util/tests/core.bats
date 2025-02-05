@@ -34,9 +34,9 @@ teardown() {
   [[ "${output}" =~ ^[a-zA-Z0-9\.\_\-]+$ ]] || false
 }
 
-@test 'core::target_triple with success' {
+@test 'core::target_tuple with success' {
 
-  run core::target_triple
+  run core::target_tuple
   (( status == 0 )) || false
   [[ "${output}" =~ ^[_a-z0-9]+[-][-a-z0-9]+$ ]] || false
 }

@@ -54,7 +54,7 @@ function core::hostname() {
   uname -n
 }
 
-function core::target_triple() {
+function core::target_tuple() {
 
   # NOTE: rust installer inspired
   if ! command -v 'uname' &>/dev/null; then

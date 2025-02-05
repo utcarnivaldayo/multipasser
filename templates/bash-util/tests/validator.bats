@@ -386,7 +386,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_interger with positive single digit' {
+@test 'validator::is_interger with positive single digit' {
 
   run validator::is_interger '1'
 
@@ -394,7 +394,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_interger with negative single digit' {
+@test 'validator::is_interger with negative single digit' {
 
   command -v jq &>/dev/null || false
   run validator::is_interger '-1'
@@ -403,7 +403,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_interger with positive multi digit' {
+@test 'validator::is_interger with positive multi digit' {
 
   run validator::is_interger '1234567890'
 
@@ -411,7 +411,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_interger with negative multi digit' {
+@test 'validator::is_interger with negative multi digit' {
 
   run validator::is_interger '-1234567890'
 
@@ -419,7 +419,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_interger with positive zero' {
+@test 'validator::is_interger with positive zero' {
 
   command -v jq &>/dev/null || false
   run validator::is_interger '+0'
@@ -428,7 +428,7 @@ teardown() {
   [[ "$(jq -rc '.level' <<< "${output}")" = 'ERROR' ]] || false
 }
 
-@test 'valodator::is_interger with negative zero' {
+@test 'validator::is_interger with negative zero' {
 
   run validator::is_interger '-0'
 
@@ -436,7 +436,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_interger with warn level' {
+@test 'validator::is_interger with warn level' {
 
   command -v jq &>/dev/null || false
   run validator::is_interger 'hoge' 'warn'
@@ -445,7 +445,7 @@ teardown() {
   [[ "$(jq -rc '.level' <<< "${output}")" = 'WARN' ]] || false
 }
 
-@test 'valodator::is_interger with warn level and csv format' {
+@test 'validator::is_interger with warn level and csv format' {
 
   run validator::is_interger 'hoge' 'warn' 'csv'
 
@@ -453,7 +453,7 @@ teardown() {
   [[ "$(cut -d ',' -f 4 <<< ${output})" = 'WARN' ]] || false
 }
 
-@test 'valodator::is_positive_integer with zero' {
+@test 'validator::is_positive_integer with zero' {
 
   run validator::is_positive_integer '0'
 
@@ -461,7 +461,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_positive_integer with positive single digit' {
+@test 'validator::is_positive_integer with positive single digit' {
 
   run validator::is_positive_integer '1'
 
@@ -469,7 +469,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_positive_integer with positive multi digit' {
+@test 'validator::is_positive_integer with positive multi digit' {
 
   run validator::is_positive_integer '1234567890'
 
@@ -477,7 +477,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_positive_integer with positive zero' {
+@test 'validator::is_positive_integer with positive zero' {
 
   command -v jq &>/dev/null || false
   run validator::is_positive_integer '+0'
@@ -495,7 +495,7 @@ teardown() {
   [[ "$(jq -rc '.level' <<< "${output}")" = 'ERROR' ]] || false
 }
 
-@test 'valodator::is_positive_integer with negative single digit' {
+@test 'validator::is_positive_integer with negative single digit' {
 
   command -v jq &>/dev/null || false
   run validator::is_positive_integer '-1'
@@ -504,7 +504,7 @@ teardown() {
   [[ "$(jq -rc '.level' <<< "${output}")" = 'ERROR' ]] || false
 }
 
-@test 'valodator::is_positive_integer with negative multi digit' {
+@test 'validator::is_positive_integer with negative multi digit' {
 
   command -v jq &>/dev/null || false
   run validator::is_positive_integer '-1234567890'
@@ -513,7 +513,7 @@ teardown() {
   [[ "$(jq -rc '.level' <<< "${output}")" = 'ERROR' ]] || false
 }
 
-@test 'valodator::is_positive_integer with warn level' {
+@test 'validator::is_positive_integer with warn level' {
 
   command -v jq &>/dev/null || false
   run validator::is_positive_integer 'hoge' 'warn'
@@ -522,7 +522,7 @@ teardown() {
   [[ "$(jq -rc '.level' <<< "${output}")" = 'WARN' ]] || false
 }
 
-@test 'valodator::is_positive_integer with warn level and csv format' {
+@test 'validator::is_positive_integer with warn level and csv format' {
 
   run validator::is_positive_integer 'hoge' 'warn' 'csv'
 
@@ -530,7 +530,7 @@ teardown() {
   [[ "$(cut -d ',' -f 4 <<< ${output})" = 'WARN' ]] || false
 }
 
-@test 'valodator::is_negative_integer with zero' {
+@test 'validator::is_negative_integer with zero' {
 
   command -v jq &>/dev/null || false
   run validator::is_negative_integer '0'
@@ -539,7 +539,7 @@ teardown() {
   [[ "$(jq -rc '.level' <<< "${output}")" = 'ERROR' ]] || false
 }
 
-@test 'valodator::is_negative_integer with positive single digit' {
+@test 'validator::is_negative_integer with positive single digit' {
 
   command -v jq &>/dev/null || false
   run validator::is_negative_integer '1'
@@ -548,7 +548,7 @@ teardown() {
   [[ "$(jq -rc '.level' <<< "${output}")" = 'ERROR' ]] || false
 }
 
-@test 'valodator::is_negative_integer with positive multi digit' {
+@test 'validator::is_negative_integer with positive multi digit' {
 
   command -v jq &>/dev/null || false
   run validator::is_negative_integer '1234567890'
@@ -557,7 +557,7 @@ teardown() {
   [[ "$(jq -rc '.level' <<< "${output}")" = 'ERROR' ]] || false
 }
 
-@test 'valodator::is_negative_integer with positive zero' {
+@test 'validator::is_negative_integer with positive zero' {
 
   command -v jq &>/dev/null || false
   run validator::is_negative_integer '+0'
@@ -574,7 +574,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_negative_integer with negative single digit' {
+@test 'validator::is_negative_integer with negative single digit' {
 
   run validator::is_negative_integer '-1'
 
@@ -582,7 +582,7 @@ teardown() {
   [[ "${output}" = '' ]] || false
 }
 
-@test 'valodator::is_negative_integer with negative multi digit' {
+@test 'validator::is_negative_integer with negative multi digit' {
 
   run validator::is_negative_integer '-1234567890'
 
