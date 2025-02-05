@@ -26,8 +26,8 @@ services:
         required: false
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD={{ '${' ~ project_name | upper_snake_case }}_MYSQL_ROOT_PASSWORD}
-      - MYSQL_REPLICA_PASSWORD={{ '${' ~ project_name | upper_snake_case }}_MYSQL_REPLICA_PASSWORD}
+      - MYSQL_ROOT_PASSWORD={{ '${' ~ project_name | upper_snake_case }}_MYSQL_ROOT_PASSWORD:-{{ project_name | kebab_case }}}
+      - MYSQL_REPLICA_PASSWORD={{ '${' ~ project_name | upper_snake_case }}_MYSQL_REPLICA_PASSWORD:-{{ project_name | kebab_case }}}
     ports:
       - 3306:3306
       - 33060:33060
@@ -51,7 +51,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "mysqladmin ping -h localhost -u root -p{{ '${' ~ project_name | upper_snake_case }}_MYSQL_ROOT_PASSWORD} | grep -q 'mysqld is alive'",
+          "mysqladmin ping -h localhost -u root -p{{ '${' ~ project_name | upper_snake_case }}_MYSQL_ROOT_PASSWORD:-{{ project_name | kebab_case }}} | grep -q 'mysqld is alive'",
         ]
       interval: 1s
       timeout: 10s
