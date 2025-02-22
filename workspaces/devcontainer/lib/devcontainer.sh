@@ -374,7 +374,6 @@ function devcontainer::install_duckdb() {
   cd "${_home}" || return 1
   local -r _download_url='https://github.com/duckdb/duckdb/releases/download'
   local -r _zip_url="${_download_url}/v${_duckdb_version}/duckdb_cli-linux-${_cpu_type}.zip"
-  local -ra _curl_option=()
   curl --proto '=https' --tlsv1.2 -sSfL "${_zip_url}" -o "${_home}/duckdb.zip"
   unzip "${_home}/duckdb.zip"
   sudo mv "${_home}/duckdb" /usr/local/bin
@@ -438,6 +437,54 @@ function devcontainer::install_pixi() {
 
   cd "${_home}" || return 1
   curl --proto '=https' --tlsv1.2 -sSfL https://pixi.sh/install.sh | PIXI_VERSION="v${_pixi_version}" bash
+}
+
+function devcontainer::install_sam() {
+
+  local -r _middleware_json="${1:-}"
+  local -r _sam_version="${2:-}"
+  local -r _user="${3:-}"
+  local -r _home="/home/${_user}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_sam_version}" >&2 || return 1
+  validator::has_value "${_user}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+
+  # dependency check
+  if [[ "$(jq -r '.apt | has("curl")' "${_middleware_json}")" = 'false' ]]; then
+    logger::error "required curl in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+  if [[ "$(jq -r '.apt | has("unzip")' "${_middleware_json}")" = 'false' ]]; then
+    logger::error "required unzip in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  local _cpu_type
+  _cpu_type="$(uname -m)"
+
+  # cpu type
+  case "${_cpu_type}" in
+  aarch64 | arm64)
+    _cpu_type='aarch64'
+    ;;
+  x86_64 | x86-64 | x64 | amd64)
+    _cpu_type='x86_64'
+    ;;
+  *)
+    logger::error "unsupported cpu type (${_cpu_type})" >&2
+    return 1
+    ;;
+  esac
+
+  cd "${_home}" || return 1
+  local -r _download_url='https://github.com/aws/aws-sam-cli/releases/download'
+  local -r _zip_url="${_download_url}/v${_sam_version}/aws-sam-cli-linux-${_cpu_type}.zip"
+  curl --proto '=https' --tlsv1.2 -sSfL "${_zip_url}" -o "${_home}/aws-sam-cli.zip"
+  unzip "${_home}/aws-sam-cli.zip" -d "${_home}/sam-installation"
+  sudo "${_home}/sam-installation/install"
+  rm "${_home}/aws-sam-cli.zip"
 }
 
 function devcontainer::proto_install_bun() {
@@ -1174,6 +1221,9 @@ function devcontainer::install_packages() {
       ;;
     pixi)
       devcontainer::install_pixi "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    sam)
+      devcontainer::install_sam "${_middleware_json}" "${_version}" "${_user}"
       ;;
     docker)
       # NOTE: docker は devcontainer features でインストールされるため、手動インストールしない
