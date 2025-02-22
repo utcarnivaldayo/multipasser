@@ -22,7 +22,7 @@ services:
         - APP_DIR={{ '${' ~ project_name | upper_snake_case }}_APP_DIR:-app}
         - BACKEND_PROJECT={{ '${' ~ project_name | upper_snake_case }}_BACKEND_PROJECT:-backend}
         - NODE_VERSION={{ '${' ~ project_name | upper_snake_case }}_NODE_VERSION:-22.14.0}
-        - NPM_VERSION={{ '${' ~ project_name | upper_snake_case }}_NPM_VERSION:-11.1.0}
+        - NPM_VERSION={{ '${' ~ project_name | upper_snake_case }}_NPM_VERSION:-10.9.2}
         - MYSQL_CONFIG=my.cnf
         - PORT=8081
         - VSCODE_EXTENSION_JSON=extensions.json
