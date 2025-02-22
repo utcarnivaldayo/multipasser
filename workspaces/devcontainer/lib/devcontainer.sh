@@ -467,7 +467,7 @@ function devcontainer::install_sam() {
   # cpu type
   case "${_cpu_type}" in
   aarch64 | arm64)
-    _cpu_type='aarch64'
+    _cpu_type='arm64'
     ;;
   x86_64 | x86-64 | x64 | amd64)
     _cpu_type='x86_64'
