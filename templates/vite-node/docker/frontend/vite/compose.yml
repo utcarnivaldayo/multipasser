@@ -21,8 +21,8 @@ services:
         - USER_NAME={{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}
         - APP_DIR={{ '${' ~ project_name | upper_snake_case }}_APP_DIR:-app}
         - FRONTEND_PROJECT={{ '${' ~ project_name | upper_snake_case }}_FRONTEND_PROJECT:-frontend}
-        - NODE_VERSION={{ '${' ~ project_name | upper_snake_case }}_NODE_VERSION:-22.13.1}
-        - PNPM_VERSION={{ '${' ~ project_name | upper_snake_case }}_PNPM_VERSION:-10.2.0}
+        - NODE_VERSION={{ '${' ~ project_name | upper_snake_case }}_NODE_VERSION:-22.14.0}
+        - NPM_VERSION={{ '${' ~ project_name | upper_snake_case }}_NPM_VERSION:-11.1.0}
         - PORT=5173
         - VSCODE_EXTENSION_JSON=extensions.json
     depends_on:

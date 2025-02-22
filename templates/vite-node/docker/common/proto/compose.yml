@@ -14,7 +14,7 @@ services:
         - GIT_BRANCH=${GIT_BRANCH:-unknown}
         - GIT_COMMIT_HASH=${GIT_COMMIT_HASH:-unknown}
         - USER_NAME={{ '${' ~ project_name | upper_snake_case }}_USER_NAME:-{{ project_name | kebab_case }}}
-        - PROTO_VERSION={{ '${' ~ project_name | upper_snake_case }}_PROTO_VERSION:-0.45.1}
+        - PROTO_VERSION={{ '${' ~ project_name | upper_snake_case }}_PROTO_VERSION:-0.46.1}
     depends_on:
       dev-{{ project_name | kebab_case }}-common-ubuntu:
         condition: service_started
