@@ -940,7 +940,7 @@ function cloud_init::set_install_sam() {
   # cpu type
   case "${_cpu_type}" in
   aarch64 | arm64)
-    _cpu_type='aarch64'
+    _cpu_type='arm64'
     ;;
   x86_64 | x86-64 | x64 | amd64)
     _cpu_type='x86_64'
@@ -955,7 +955,8 @@ function cloud_init::set_install_sam() {
   local -r _zip_url="${_download_url}/v${_sam_version}/aws-sam-cli-linux-${_cpu_type}.zip"
   local -ra _curl_option=('--proto' '=https' '--tlsv1.2' '-sSfL' "${_zip_url}" '-o' 'aws-sam-cli.zip')
 cat - <<EOS | sed -e 's|^|  |'
-- curl ${_curl_option[*]} && unzip aws-sam-cli.zip -d sam-installation && ./sam-installation/install && rm aws-sam-cli.zip
+- curl ${_curl_option[*]} && unzip aws-sam-cli.zip -d sam-installation
+- ./sam-installation/install && rm aws-sam-cli.zip
 EOS
 }
 
