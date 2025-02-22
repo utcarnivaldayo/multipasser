@@ -913,6 +913,52 @@ cat - <<EOS | sed -e 's|^|  |'
 EOS
 }
 
+function cloud_init::set_install_sam() {
+
+  local -r _middleware_json="${1:-}"
+  local -r _sam_version="${2:-}"
+  local -r _user="${3:-}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_sam_version}" >&2 || return 1
+  validator::has_value "${_user}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+
+  # dependency check
+  if [[ "$(jq -r '.apt | has("curl")' "${_middleware_json}")" = 'false' ]]; then
+    logger::error "required curl in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+  if [[ "$(jq -r '.apt | has("unzip")' "${_middleware_json}")" = 'false' ]]; then
+    logger::error "required unzip in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  local _cpu_type
+  _cpu_type="$(uname -m)"
+
+  # cpu type
+  case "${_cpu_type}" in
+  aarch64 | arm64)
+    _cpu_type='aarch64'
+    ;;
+  x86_64 | x86-64 | x64 | amd64)
+    _cpu_type='x86_64'
+    ;;
+  *)
+    logger::error "unsupported cpu type (${_cpu_type})" >&2
+    return 1
+    ;;
+  esac
+
+  local -r _download_url='https://github.com/aws/aws-sam-cli/releases/download'
+  local -r _zip_url="${_download_url}/v${_sam_version}/aws-sam-cli-linux-${_cpu_type}.zip"
+  local -ra _curl_option=('--proto' '=https' '--tlsv1.2' '-sSfL' "${_zip_url}" '-o' 'aws-sam-cli.zip')
+cat - <<EOS | sed -e 's|^|  |'
+- curl ${_curl_option[*]} && unzip aws-sam-cli.zip -d sam-installation && ./sam-installation/install && rm aws-sam-cli.zip
+EOS
+}
+
 function cloud_init::set_proto_install_bun() {
   local -r _middleware_json="${1:-}"
   local -r _bun_version="${2:-}"
@@ -1725,6 +1771,9 @@ function cloud_init::set_install_packages() {
       ;;
     pixi)
       cloud_init::set_install_pixi "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    sam)
+      cloud_init::set_install_sam "${_middleware_json}" "${_version}" "${_user}"
       ;;
     *)
       return 1
