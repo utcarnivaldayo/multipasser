@@ -23,7 +23,7 @@ LABEL org.opencontainers.image.revision=${GIT_COMMIT_HASH}
 
 ARG USER_NAME
 ARG NODE_VERSION
-ARG PNPM_VERSION
+ARG NPM_VERSION
 ARG APP_DIR
 ARG FRONTEND_PROJECT
 ARG WORKSPACE=/home/${USER_NAME}
@@ -32,7 +32,7 @@ ENV PATH=${PROTO_HOME}/shims:${PROTO_HOME}/bin:${PATH}
 
 USER ${USER_NAME}
 RUN proto install node ${NODE_VERSION} \
-  && proto install pnpm ${PNPM_VERSION} \
+  && proto install npm ${NPM_VERSION} \
   && mkdir -p ${WORKSPACE}/${APP_DIR}/${FRONTEND_PROJECT}/node_modules
 
 # ----- dev -----

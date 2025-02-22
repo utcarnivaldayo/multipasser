@@ -38,7 +38,7 @@
     "kubectl": "1.32.2",
     "tilt": "0.33.22",
     "opentofu": "1.9.0",
-    "proto": "0.45.2",
+    "proto": "0.46.1",
     "radicle": "1.1.0",
     "aws_cli": "latest",
     "lltsv": "0.7.0",
