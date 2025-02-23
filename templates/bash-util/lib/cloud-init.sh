@@ -1788,15 +1788,14 @@ function cloud_init::build_cloud_init() {
   local -r _user="${2:-}"
   local -r _password="${3:-}"
   local -r _ssh_authorized_keys="${4:-}"
-  local -r _remote_mount_point="${5:-}"
-  local -r _middleware_json="${6:-}"
-  local -r _vscode_extensions_json="${7:-}"
+  local -r _middleware_json="${5:-}"
+  local -r _vscode_extensions_json="${6:-}"
+  local -r _remote_mount_point="${7:-}"
 
   validator::has_value "${_hostname}" >&2 || return 1
   validator::has_value "${_user}" >&2 || return 1
   validator::has_value "${_password}" >&2 || return 1
   validator::has_value "${_ssh_authorized_keys}" >&2 || return 1
-  validator::has_value "${_remote_mount_point}" >&2 || return 1
   validator::json_file_exists "${_middleware_json}" >&2 || return 1
   validator::json_file_exists "${_vscode_extensions_json}" >&2 || return 1
 
@@ -1817,13 +1816,13 @@ $(cloud_init::set_user "${_user}" 'true' "${_ssh_authorized_keys}")
 $(cloud_init::set_chpasswd "${_user}" "${_password}" 'false')
 
 write_files:
-$(cloud_init::set_mounted_repository_safe_config "${_user}" "${_remote_mount_point}")
+$([[ -n "${_remote_mount_point}" ]] && cloud_init::set_mounted_repository_safe_config "${_user}" "${_remote_mount_point}")
 $(cloud_init::set_vscode_extensions "${_user}" "${_vscode_extensions_json}")
 $(cloud_init::set_bashrc "${_user}" "${_vscode_extensions_json}")
 $(cloud_init::set_profile "${_user}")
 
 runcmd:
-$(cloud_init::set_mkdir_mount_point "${_remote_mount_point}" "${_user}")
+$([[ -n "${_remote_mount_point}" ]] && cloud_init::set_mkdir_mount_point "${_remote_mount_point}" "${_user}")
 $(cloud_init::set_install_packages "${_middleware_json}" "${_user}")
 $(cloud_init::set_proto_install_packages "${_middleware_json}" "${_user}")
 EOS
