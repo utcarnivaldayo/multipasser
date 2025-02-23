@@ -27,3 +27,4 @@
 - [radicle](https://radicle.xyz/download)
 - [lltsv](https://github.com/sonots/lltsv)
 - [pixi](https://github.com/prefix-dev/pixi)
+- [sam](https://github.com/aws/aws-sam-cli)
