@@ -265,10 +265,10 @@ function build_cloud_init() {
   local -r _user="${3}"
   local -r _password="${4}"
   local -r _authorized_key="${5}"
-  local -r _remote_mount_point="${6}"
-  local -r _middleware_json="${7}"
-  local -r _vscode_extensions_json="${8}"
-  local -r _cloud_init="${9}"
+  local -r _middleware_json="${6}"
+  local -r _vscode_extensions_json="${7}"
+  local -r _cloud_init="${8}"
+  local -r _remote_mount_point="${9:-}"
 
   # build cloud_init
   logger::info "build cloud-init for ${_instance_name} start"
@@ -278,9 +278,9 @@ function build_cloud_init() {
   _build_cloud_init_args+=("${_user}")
   _build_cloud_init_args+=("${_password}")
   _build_cloud_init_args+=("${_authorized_key}")
-  _build_cloud_init_args+=("${_remote_mount_point}")
   _build_cloud_init_args+=("${_middleware_json}")
   _build_cloud_init_args+=("${_vscode_extensions_json}")
+  _build_cloud_init_args+=("${_remote_mount_point}")
   local -ra _build_cloud_init_args
   if [[ "${_dry_run}" = 'true' ]]; then
     cloud_init::build_cloud_init "${_build_cloud_init_args[@]}"
@@ -342,6 +342,16 @@ function mount() {
   logger::info "mount for ${_instance_name} end"
 }
 
+function is_mountable() {
+  local -r _instance_name="${1}"
+  local _local_mount_path=''
+  _local_mount_path="$(core::monorepo_root)"
+  local -r _local_mount_path
+  validator::directory_exists "${_local_mount_path}" >&2 || exit 1
+
+  [[ "$(basename "${_local_mount_path}")" = "${_instance_name}" ]]
+}
+
 function test_ssh_connection() {
   local -r _instance_name="${1}"
   local -r _dry_run="${2}"
@@ -384,6 +394,7 @@ function launch() {
       ;;
     -u | --user)
       _user="${2:-${_user}}"
+      [[ "${_password}" = "${USER_PASSWORD}" ]] && _password="${_user}"
       shift
       ;;
     -p | --password)
@@ -392,6 +403,9 @@ function launch() {
       ;;
     -i | --instance)
       _instance_name="${2:-${_instance_name}}"
+      [[ "${_user}" = "${USER_NAME}" ]] && _user="${_instance_name}"
+      [[ "${_password}" = "${USER_PASSWORD}" ]] && _password="${_instance_name}"
+      [[ "${_hostname}" = "${HOSTNAME}" ]] && _hostname="${_instance_name}"
       shift
       ;;
     -H | --hostname)
@@ -531,7 +545,6 @@ function launch() {
   local _authorized_key=''
   _authorized_key="$(get_authorized_key "${_get_authorized_key_args[@]}")"
   local -r _authorized_key
-  local -r _remote_mount_point="/home/${_user}/${_instance_name}"
 
   # build cloud-init
   local _build_cloud_init_args=()
@@ -540,10 +553,10 @@ function launch() {
   _build_cloud_init_args+=("${_user}")
   _build_cloud_init_args+=("${_password}")
   _build_cloud_init_args+=("${_authorized_key}")
-  _build_cloud_init_args+=("${_remote_mount_point}")
   _build_cloud_init_args+=("${_middleware_json}")
   _build_cloud_init_args+=("${_vscode_extensions_json}")
   _build_cloud_init_args+=("${_cloud_init_path}")
+  is_mountable "${_instance_name}" && _build_cloud_init_args+=("/home/${_user}/${_instance_name}")
   local -ra _build_cloud_init_args
   build_cloud_init "${_build_cloud_init_args[@]}" >&2 || exit 1
 
@@ -562,12 +575,14 @@ function launch() {
   launch_instance "${_launch_instance_args[@]}" >&2 || exit 1
 
   # mount
-  local -a _mount_args=()
-  _mount_args+=("${_instance_name}")
-  _mount_args+=("${_remote_mount_point}")
-  _mount_args+=("${_dry_run}")
-  local -ra _mount_args
-  mount "${_mount_args[@]}" >&2 || exit 1
+  if is_mountable "${_instance_name}"; then
+    local -a _mount_args=()
+    _mount_args+=("${_instance_name}")
+    _mount_args+=("/home/${_user}/${_instance_name}")
+    _mount_args+=("${_dry_run}")
+    local -ra _mount_args
+    mount "${_mount_args[@]}" >&2 || exit 1
+  fi
 
   # test ssh connection
   local -a _test_ssh_connection_args=()
