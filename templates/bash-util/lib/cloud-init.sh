@@ -229,7 +229,6 @@ function cloud_init::set_bashrc() {
   append: true
   defer: true
   content: |
-    eval "\$(ssh-agent -s)"
 $(cloud_init::set_bashrc_initialize_vscode_extensions "${_user}" "${_vscode_extensions_json}")
 $(cloud_init::set_bashrc_gitignore_io)
     if command -v direnv &> /dev/null; then
