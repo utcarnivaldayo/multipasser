@@ -29,9 +29,9 @@ teardown() {
   _build_cloud_init+=("${USER_NAME}")
   _build_cloud_init+=("${USER_PASSWORD}")
   _build_cloud_init+=("${SSH_AUTHORIZED_KEYS}")
-  _build_cloud_init+=("${REMOTE_MOUNT_POINT}")
   _build_cloud_init+=("${MIDDLEWARE_JSON}")
   _build_cloud_init+=("${VSCODE_EXTENSIONS_JSON}")
+  _build_cloud_init+=("${REMOTE_MOUNT_POINT}")
   local -ra _build_cloud_init
 
   command -v yq &>/dev/null || false
