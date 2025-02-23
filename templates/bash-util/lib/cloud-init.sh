@@ -1815,14 +1815,14 @@ $(cloud_init::set_user "${_user}" 'true' "${_ssh_authorized_keys}")
 $(cloud_init::set_chpasswd "${_user}" "${_password}" 'false')
 
 write_files:
-$([[ -n "${_remote_mount_point}" ]] && cloud_init::set_mounted_repository_safe_config "${_user}" "${_remote_mount_point}")
 $(cloud_init::set_vscode_extensions "${_user}" "${_vscode_extensions_json}")
 $(cloud_init::set_bashrc "${_user}" "${_vscode_extensions_json}")
 $(cloud_init::set_profile "${_user}")
+$([[ -n "${_remote_mount_point}" ]] && cloud_init::set_mounted_repository_safe_config "${_user}" "${_remote_mount_point}")
 
 runcmd:
-$([[ -n "${_remote_mount_point}" ]] && cloud_init::set_mkdir_mount_point "${_remote_mount_point}" "${_user}")
 $(cloud_init::set_install_packages "${_middleware_json}" "${_user}")
 $(cloud_init::set_proto_install_packages "${_middleware_json}" "${_user}")
+$([[ -n "${_remote_mount_point}" ]] && cloud_init::set_mkdir_mount_point "${_remote_mount_point}" "${_user}")
 EOS
 }
