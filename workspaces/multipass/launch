@@ -394,6 +394,7 @@ function launch() {
       ;;
     -u | --user)
       _user="${2:-${_user}}"
+      [[ "${_password}" = "${USER_PASSWORD}" ]] && _password="${_user}"
       shift
       ;;
     -p | --password)
@@ -402,6 +403,9 @@ function launch() {
       ;;
     -i | --instance)
       _instance_name="${2:-${_instance_name}}"
+      [[ "${_user}" = "${USER_NAME}" ]] && _user="${_instance_name}"
+      [[ "${_password}" = "${USER_PASSWORD}" ]] && _password="${_instance_name}"
+      [[ "${_hostname}" = "${HOSTNAME}" ]] && _hostname="${_instance_name}"
       shift
       ;;
     -H | --hostname)
