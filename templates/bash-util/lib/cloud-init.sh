@@ -1020,6 +1020,25 @@ function cloud_init::set_proto_install_go() {
 EOS
 }
 
+function cloud_init::set_proto_install_moon() {
+  local -r _middleware_json="${1:-}"
+  local -r _moon_version="${2:-}"
+  local -r _user="${3:-}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_moon_version}" >&2 || return 1
+  validator::has_value "${_user}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+  if ! jq -r '.runcmd | has("proto")' "${_middleware_json}" | grep -q 'true'; then
+    logger::error "required proto in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  cat - <<EOS | sed -e 's|^|  |'
+- su - ${_user} -c "~/.proto/bin/proto install moon ${_moon_version}"
+EOS
+}
+
 function cloud_init::set_proto_install_node() {
   local -r _middleware_json="${1:-}"
   local -r _node_version="${2:-}"
@@ -1081,6 +1100,67 @@ function cloud_init::set_proto_install_pnpm() {
 EOS
 }
 
+function cloud_init::set_proto_install_poetry() {
+  local -r _middleware_json="${1:-}"
+  local -r _poetry_version="${2:-}"
+  local -r _user="${3:-}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_poetry_version}" >&2 || return 1
+  validator::has_value "${_user}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+  if ! jq -r '.runcmd | has("proto")' "${_middleware_json}" | grep -q 'true'; then
+    logger::error "required proto in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  cat - <<EOS | sed -e 's|^|  |'
+- su - ${_user} -c "~/.proto/bin/proto install poetry ${_poetry_version}"
+EOS
+}
+
+function cloud_init::set_proto_install_python() {
+  local -r _middleware_json="${1:-}"
+  local -r _python_version="${2:-}"
+  local -r _user="${3:-}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_python_version}" >&2 || return 1
+  validator::has_value "${_user}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+
+  # dependency check
+  if ! jq -r '.runcmd | has("proto")' "${_middleware_json}" | grep -q 'true'; then
+    logger::error "required proto in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  cat - <<EOS | sed -e 's|^|  |'
+- su - ${_user} -c "~/.proto/bin/proto install python ${_python_version}"
+EOS
+}
+
+function cloud_init::set_proto_install_ruby() {
+  local -r _middleware_json="${1:-}"
+  local -r _ruby_version="${2:-}"
+  local -r _user="${3:-}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_ruby_version}" >&2 || return 1
+  validator::has_value "${_user}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+
+  # dependency check
+  if ! jq -r '.runcmd | has("proto")' "${_middleware_json}" | grep -q 'true'; then
+    logger::error "required proto in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  cat - <<EOS | sed -e 's|^|  |'
+- su - ${_user} -c "~/.proto/bin/proto install ruby ${_ruby_version}"
+EOS
+}
+
 function cloud_init::set_proto_install_rust() {
   local -r _middleware_json="${1:-}"
   local -r _rust_version="${2:-}"
@@ -1097,6 +1177,26 @@ function cloud_init::set_proto_install_rust() {
 
   cat - <<EOS | sed -e 's|^|  |'
 - su - ${_user} -c "~/.proto/bin/proto install rust ${_rust_version}"
+EOS
+}
+
+function cloud_init::set_proto_install_uv() {
+  local -r _middleware_json="${1:-}"
+  local -r _uv_version="${2:-}"
+  local -r _user="${3:-}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_uv_version}" >&2 || return 1
+  validator::has_value "${_user}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+
+  if ! jq -r '.runcmd | has("proto")' "${_middleware_json}" | grep -q 'true'; then
+    logger::error "required proto in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  cat - <<EOS | sed -e 's|^|  |'
+- su - ${_user} -c "~/.proto/bin/proto install uv ${_uv_version}"
 EOS
 }
 
@@ -1413,6 +1513,27 @@ function cloud_init::set_proto_install_k3d() {
 EOS
 }
 
+function cloud_init::set_proto_install_kompose() {
+  local -r _middleware_json="${1:-}"
+  local -r _kompose_version="${2:-}"
+  local -r _user="${3:-}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_kompose_version}" >&2 || return 1
+  validator::has_value "${_user}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+  if ! jq -r '.runcmd | has("proto")' "${_middleware_json}" | grep -q 'true'; then
+    logger::error "required proto in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  local -r _toml_plugin='https://raw.githubusercontent.com/firleaf/proto-toml-plugins/main/plugins/kompose.toml'
+  cat - <<EOS | sed -e 's|^|  |'
+- su - ${_user} -c "~/.proto/bin/proto plugin add kompose ${_toml_plugin}"
+- su - ${_user} -c "~/.proto/bin/proto install kompose ${_kompose_version}"
+EOS
+}
+
 function cloud_init::set_proto_install_kubectl() {
   local -r _middleware_json="${1:-}"
   local -r _kubectl_version="${2:-}"
@@ -1452,27 +1573,6 @@ function cloud_init::set_proto_install_mise() {
   cat - <<EOS | sed -e 's|^|  |'
 - su - ${_user} -c "~/.proto/bin/proto plugin add mise ${_toml_plugin}"
 - su - ${_user} -c "~/.proto/bin/proto install mise ${_mise_version}"
-EOS
-}
-
-function cloud_init::set_proto_install_moon() {
-  local -r _middleware_json="${1:-}"
-  local -r _moon_version="${2:-}"
-  local -r _user="${3:-}"
-
-  validator::json_file_exists "${_middleware_json}" >&2 || return 1
-  validator::is_semantic_versioning "${_moon_version}" >&2 || return 1
-  validator::has_value "${_user}" >&2 || return 1
-  validator::command_exists 'jq' >&2 || return 1
-  if ! jq -r '.runcmd | has("proto")' "${_middleware_json}" | grep -q 'true'; then
-    logger::error "required proto in middleware.json (${_middleware_json})" >&2
-    return 1
-  fi
-
-  local -r _toml_plugin='https://raw.githubusercontent.com/moonrepo/moon/master/proto-plugin.toml'
-  cat - <<EOS | sed -e 's|^|  |'
-- su - ${_user} -c "~/.proto/bin/proto plugin add moon ${_toml_plugin}"
-- su - ${_user} -c "~/.proto/bin/proto install moon ${_moon_version}"
 EOS
 }
 
@@ -1560,6 +1660,27 @@ function cloud_init::set_proto_install_tilt(){
 EOS
 }
 
+function cloud_init::set_proto_install_opentofu() {
+  local -r _middleware_json="${1:-}"
+  local -r _opentofu_version="${2:-}"
+  local -r _user="${3:-}"
+
+  validator::json_file_exists "${_middleware_json}" >&2 || return 1
+  validator::is_semantic_versioning "${_opentofu_version}" >&2 || return 1
+  validator::has_value "${_user}" >&2 || return 1
+  validator::command_exists 'jq' >&2 || return 1
+  if ! jq -r '.runcmd | has("proto")' "${_middleware_json}" | grep -q 'true'; then
+    logger::error "required proto in middleware.json (${_middleware_json})" >&2
+    return 1
+  fi
+
+  local -r _toml_plugin='https://raw.githubusercontent.com/appthrust/proto-toml-plugins/main/tofu/plugin.toml'
+  cat - <<EOS | sed -e 's|^|  |'
+- su - ${_user} -c "~/.proto/bin/proto plugin add opentofu ${_toml_plugin}"
+- su - ${_user} -c "~/.proto/bin/proto install opentofu ${_opentofu_version}"
+EOS
+}
+
 function cloud_init::set_proto_install_yq(){
   local -r _middleware_json="${1:-}"
   local -r _yq_version="${2:-}"
@@ -1636,6 +1757,12 @@ function cloud_init::set_proto_install_packages() {
     biome)
       cloud_init::set_proto_install_biome "${_middleware_json}" "${_version}" "${_user}"
       ;;
+    bun)
+      cloud_init::set_proto_install_bun "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    deno)
+      cloud_init::set_proto_install_deno "${_middleware_json}" "${_version}" "${_user}"
+      ;;
     direnv)
       cloud_init::set_proto_install_direnv "${_middleware_json}" "${_version}" "${_user}"
       ;;
@@ -1644,6 +1771,9 @@ function cloud_init::set_proto_install_packages() {
       ;;
     gh)
       cloud_init::set_proto_install_gh "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    go)
+      cloud_init::set_proto_install_go "${_middleware_json}" "${_version}" "${_user}"
       ;;
     helm)
       cloud_init::set_proto_install_helm "${_middleware_json}" "${_version}" "${_user}"
@@ -1663,6 +1793,9 @@ function cloud_init::set_proto_install_packages() {
     k3d)
       cloud_init::set_proto_install_k3d "${_middleware_json}" "${_version}" "${_user}"
       ;;
+    kompose)
+      cloud_init::set_proto_install_kompose "${_middleware_json}" "${_version}" "${_user}"
+      ;;
     kubectl)
       cloud_init::set_proto_install_kubectl "${_middleware_json}" "${_version}" "${_user}"
       ;;
@@ -1671,6 +1804,27 @@ function cloud_init::set_proto_install_packages() {
       ;;
     moon)
       cloud_init::set_proto_install_moon "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    node)
+      cloud_init::set_proto_install_node "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    npm)
+      cloud_init::set_proto_install_npm "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    pnpm)
+      cloud_init::set_proto_install_pnpm "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    poetry)
+      cloud_init::set_proto_install_poetry "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    python)
+      cloud_init::set_proto_install_python "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    ruby)
+      cloud_init::set_proto_install_ruby "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    rust)
+      cloud_init::set_proto_install_rust "${_middleware_json}" "${_version}" "${_user}"
       ;;
     shellcheck)
       cloud_init::set_proto_install_shellcheck "${_middleware_json}" "${_version}" "${_user}"
@@ -1683,6 +1837,12 @@ function cloud_init::set_proto_install_packages() {
       ;;
     tilt)
       cloud_init::set_proto_install_tilt "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    opentofu)
+      cloud_init::set_proto_install_opentofu "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    uv)
+      cloud_init::set_proto_install_uv "${_middleware_json}" "${_version}" "${_user}"
       ;;
     yq)
       cloud_init::set_proto_install_yq "${_middleware_json}" "${_version}" "${_user}"
