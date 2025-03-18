@@ -7,6 +7,7 @@
 - [act](https://github.com/nektos/act)
 - [gh](https://github.com/cli/cli)
 - [infisical](https://github.com/Infisical/infisical)
+- [helm](https://github.com/helm/helm)
 - [jq](https://github.com/jqlang/jq)
 - [kompose](https://github.com/kubernetes/kompose)
 - [mise](https://github.com/jdx/mise)
