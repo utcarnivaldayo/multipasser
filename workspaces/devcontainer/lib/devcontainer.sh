@@ -956,9 +956,6 @@ function devcontainer::proto_install_moon() {
     logger::error "required proto in middleware.json (${_middleware_json})" >&2
     return 1
   fi
-
-  local -r _toml_plugin='https://raw.githubusercontent.com/moonrepo/moon/master/proto-plugin.toml'
-  ~/.proto/bin/proto plugin add moon "${_toml_plugin}"
   ~/.proto/bin/proto install moon "${_moon_version}"
 }
 
