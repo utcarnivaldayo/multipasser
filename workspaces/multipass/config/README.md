@@ -8,6 +8,7 @@
 - [gh](https://github.com/cli/cli)
 - [infisical](https://github.com/Infisical/infisical)
 - [jq](https://github.com/jqlang/jq)
+- [kompose](https://github.com/kubernetes/kompose)
 - [mise](https://github.com/jdx/mise)
 - [moon](https://github.com/moonrepo/moon)
 - [sops](https://github.com/getsops/sops)
@@ -26,5 +27,4 @@
 - [proto](https://github.com/moonrepo/proto)
 - [radicle](https://radicle.xyz/download)
 - [lltsv](https://github.com/sonots/lltsv)
-- [pixi](https://github.com/prefix-dev/pixi)
 - [sam](https://github.com/aws/aws-sam-cli)
