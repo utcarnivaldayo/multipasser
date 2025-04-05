@@ -17,6 +17,7 @@
     "redhat.vscode-yaml",
     "mechatroner.rainbow-csv",
     "EditorConfig.EditorConfig",
+    "gamunu.opentofu",
     "bierner.markdown-preview-github-styles",
     "bierner.markdown-emoji",
     "bierner.markdown-mermaid",
@@ -25,6 +26,7 @@
     "ms-vscode-remote.vscode-remote-extensionpack",
     "DavidAnson.vscode-markdownlint",
     "bierner.markdown-yaml-preamble",
+    "moonrepo.moon-console",
     "ms-vsliveshare.vsliveshare"
   ],
   "unwantedRecommendations": []

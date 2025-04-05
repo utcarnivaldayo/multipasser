@@ -21,6 +21,7 @@
         "redhat.vscode-yaml",
         "mechatroner.rainbow-csv",
         "EditorConfig.EditorConfig",
+        "gamunu.opentofu",
         "bierner.markdown-preview-github-styles",
         "bierner.markdown-emoji",
         "bierner.markdown-mermaid",
@@ -29,7 +30,7 @@
         "ms-vscode-remote.vscode-remote-extensionpack",
         "DavidAnson.vscode-markdownlint",
         "bierner.markdown-yaml-preamble",
-        "ms-vsliveshare.vsliveshare"
+        "moonrepo.moon-console"
       ],
       "settings": {
         "[css]": {
@@ -48,7 +49,6 @@
           "editor.tabSize": 2
         },
         "[javascript]": {
-          "editor.defaultFormatter": "biomejs.biome",
           "editor.tabSize": 2
         },
         "[json][jsonc]": {
@@ -76,7 +76,6 @@
           "editor.tabSize": 4
         },
         "[shellscript]": {
-          "editor.defaultFormatter": "foxundermoon.shell-format",
           "editor.tabSize": 2
         },
         "[terraform-vars]": {
@@ -95,11 +94,9 @@
           "editor.wordWrap": "off"
         },
         "[typescript]": {
-          "editor.defaultFormatter": "biomejs.biome",
           "editor.tabSize": 2
         },
         "[typescriptreact]": {
-          "editor.defaultFormatter": "biomejs.biome",
           "editor.tabSize": 2
         },
         "[yaml]": {
