@@ -168,10 +168,6 @@ function post_create() {
   devcontainer::install_packages "${_middleware_json}" "${_user}"
   logger::info "install packages required run command end" >&2
 
-  logger::info "install packages with proto start" >&2
-  devcontainer::proto_install_packages "${_middleware_json}" "${_user}"
-  logger::info "install packages with proto end" >&2
-
   logger::info "${COMMAND_NAME} end" >&2
 }
 
