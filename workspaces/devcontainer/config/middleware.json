@@ -7,7 +7,6 @@
     "git": "latest",
     "gzip": "latest",
     "nano": "latest",
-    "sshfs": "latest",
     "tree": "latest",
     "unzip": "latest",
     "util_linux_extra": "latest",
