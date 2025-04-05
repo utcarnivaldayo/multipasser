@@ -102,7 +102,7 @@ function devcontainer::install_lltsv() {
   sudo chmod a+x /usr/local/bin/lltsv
 }
 
-function cloud_init::set_install_devbox() {
+function devcontainer::install_devbox() {
   local -r _middleware_json="${1:-}"
   local -r _devbox_version="${2:-}"
   local -r _user="${3:-}"
@@ -140,6 +140,9 @@ function devcontainer::install_packages() {
     case "${_formatted_package}" in
     lltsv)
       devcontainer::install_lltsv "${_middleware_json}" "${_version}" "${_user}"
+      ;;
+    devbox)
+      devcontainer::install_devbox "${_middleware_json}" "${_version}" "${_user}"
       ;;
     docker)
       # NOTE: docker は devcontainer features でインストールされるため、手動インストールしない
