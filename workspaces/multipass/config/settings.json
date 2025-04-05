@@ -15,8 +15,6 @@
     "editor.tabSize": 2
   },
   "[javascript]": {
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.formatOnSave": true,
     "editor.tabSize": 2
   },
   "[json][jsonc]": {
@@ -44,7 +42,6 @@
     "editor.tabSize": 4
   },
   "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format",
     "editor.tabSize": 2
   },
   "[terraform-vars]": {
@@ -63,11 +60,9 @@
     "editor.wordWrap": "off"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome",
     "editor.tabSize": 2
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome",
     "editor.tabSize": 2
   },
   "[yaml]": {
@@ -111,7 +106,6 @@
   "emmet.variables": {
     "lang": "ja"
   },
-  "explorer.compactFolders": false,
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.incrementalNaming": "smart",
@@ -136,7 +130,6 @@
     "tab_spaces=4"
   ],
   "scm.alwaysShowRepositories": true,
-  "scm.compactFolders": false,
   "search.exclude": {},
   "search.showLineNumbers": true,
   "terminal.integrated.confirmOnExit": "never",

@@ -1,0 +1,15 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+stack: 'infrastructure'
+language: 'bash'
+type: 'configuration'
+
+tags:
+  - 'workspace'
+
+project:
+  name: 'aws workspace'
+  description: 'aws custom workspace lancher'
+  channel: '#multipasser'
+  owner: 'numagotatu'
+  maintainers: ['ut']

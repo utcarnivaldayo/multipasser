@@ -4,17 +4,43 @@
     "apt_transport_https": "latest",
     "ca_certificates": "latest",
     "curl": "latest",
+    "direnv": "latest",
     "git": "latest",
     "gzip": "latest",
     "nano": "latest",
+    "sqlite3": "latest",
     "tree": "latest",
     "unzip": "latest",
     "util_linux_extra": "latest",
     "vim": "latest",
+    "xz_utils": "latest",
     "zstd": "latest"
   },
+  "proto": {
+    "act": "0.2.75",
+    "gh": "2.68.1",
+    "infisical": "0.36.18",
+    "helm": "3.17.2",
+    "jq": "1.7.1",
+    "kompose": "1.35.0",
+    "mise": "2025.3.3",
+    "moon": "1.33.1",
+    "sops": "3.9.4",
+    "yq": "4.45.1"
+  },
   "runcmd": {
-    "devbox": "latest",
-    "docker": "28.0.4"
+    "bats_core": "1.11.1",
+    "ctlptl": "0.8.39",
+    "duckdb": "1.2.1",
+    "kind": "0.27.0",
+    "kubectl": "1.32.3",
+    "tilt": "0.33.22",
+    "opentofu": "1.9.0",
+    "proto": "0.47.5",
+    "radicle": "1.1.0",
+    "aws_cli": "latest",
+    "lltsv": "0.7.0",
+    "pixi": "0.41.4",
+    "sam": "1.135.0"
   }
 }
